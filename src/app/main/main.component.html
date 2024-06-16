@@ -1,0 +1,22 @@
+<div>
+  <!-- Include topbar component -->
+  <app-topbar></app-topbar>
+  
+  <!-- Your existing sidebar navigation and main content -->
+  <div class="app-container">
+    <!-- Main content -->
+    <div class="main-content">
+      <app-post-feed></app-post-feed>
+      
+      <!-- Floating action button -->
+      <button mat-fab class="fab-button btn btn-primary" (click)="openPostModal()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    
+    <app-sidebar></app-sidebar>
+  </div>
+  
+  <!-- Include the post-create-modal component -->
+  <app-post-create-modal></app-post-create-modal>
+</div>

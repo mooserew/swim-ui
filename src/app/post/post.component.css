@@ -1,0 +1,74 @@
+#postContainer {
+  margin-top: 90px !important; /* Adjust margin to accommodate top nav height */
+  justify-content: center; /* Center items horizontally */
+  align-items: flex-start; /* Align items to the start of the flex container (top of the page) */
+  flex-wrap: wrap; /* Allow items to wrap to the next line if necessary */
+}
+
+.post {
+  background-color: rgb(18, 18, 18) !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+  margin-bottom: 20px !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.post .card {
+  background-color:  rgb(24, 24, 24) !important;
+
+}
+
+.post .username {
+  color: #ffffff !important;
+  font-size: 1rem !important;
+  font-weight: bold !important;
+  margin-bottom: 20px !important;
+  margin-left: 10px !important; /* Adjust left margin */
+}
+
+.post .content {
+  color: #b0b0b0 !important;
+  margin-left: 10px !important; /* Ensure content aligns with username */
+}
+
+.post .date small {
+  color: #888888 !important;
+  margin-left: 10px !important; /* Ensure date aligns with username */
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.like-button .bi-heart {
+  font-size: 1.2rem; /* Adjust the icon size */
+}
+
+span.like-count
+{
+  color: white;
+  font-size: 14px;
+}
+
+.like-button .bi-heart-fill {
+  color: #FF6B6B;
+  font-size: 1.2rem;
+}
+
+.comment-button .bi-chat {
+  font-size: 1.2rem;
+}
+
+.action-buttons .like-button .like-count,
+.action-buttons .comment-button .comment-count {
+  margin-left: 0.5rem; /* adjust this value to increase or decrease the horizontal spacing */
+}
+
+.action-buttons .btn-link {
+  text-decoration: none !important;
+}
+
+.content-divider {
+  border: none;
+  border-top: 1px solid #ccc; /* Grey line separator */
+  margin: 15px 0; /* Adjust vertical spacing */
+}

@@ -1,0 +1,19 @@
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="">
+        <img src="/logo-no-bg.png" alt="Swim Logo" width="30" height="30" class="d-inline-block align-top" >
+        <span class="logo-name">Swim</span>
+      </a>
+      <form class="d-flex position-relative">
+        <input class="form-control me-2" type="search" placeholder="Search for users" aria-label="Search" (input)="search($event)">
+        <div class="dropdown-menu position-absolute" [class.show]="searchResults.length > 0" *ngIf="searchResults.length > 0">
+          <ul class="list-group" aria-labelledby="dropdownMenuButton">
+            <li class="list-group-item dropdown-item" *ngFor="let result of searchResults">
+              <a class="dropdown-link" href="#">&#64;{{ result.userName }}</a>
+            </li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </nav>
+  

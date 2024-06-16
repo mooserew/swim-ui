@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="post mb-4">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text username">&#64;{{ post.username }}</p>
+            <p class="card-text content">{{ post.content }}</p>
+            <hr class="content-divider"> <!-- Grey line separator -->
+            <p class="card-text date"><small class="text-muted">Posted on {{ formatDate(post.createdAt) }}</small></p>
+            <div class="action-buttons">
+              <button class="btn btn-link like-button" (click)="toggleLike()">
+                <i class="bi" [ngClass]="{'bi-heart-fill': liked, 'bi-heart': !liked}"></i>
+                <span class="like-count">{{ likeCount }}</span>
+              </button>
+              <button class="btn btn-link comment-button">
+                <i class="bi bi-chat"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<ng-template #postModal let-modal>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="postModalLabel">Create Post</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea [(ngModel)]="postContent" class="form-control" id="postContent" rows="3" placeholder="What's on your mind?" maxlength="150"></textarea>
+        <div id="charCount" class="text-muted">Characters: {{ postContent.length }}/150</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+        <button type="button" class="btn btn-primary" [disabled]="postContent.length > 150 || postContent.length === 0" (click)="createPost(modal)">Post</button>
+      </div>
+    </div>
+  </ng-template>
+  

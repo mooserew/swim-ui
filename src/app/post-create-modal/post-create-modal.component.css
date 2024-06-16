@@ -1,0 +1,76 @@
+.modal-content {
+    background-color: rgb(24, 24, 24);
+    color: #f1f1f1;
+    border: none;
+    border-radius: 8px;
+}
+
+.modal-header, .modal-footer {
+    background-color: rgb(28, 28, 28);
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header .modal-title {
+    margin: 0;
+    color: #e0e0e0;
+}
+
+.modal-header .close {
+    color: #f1f1f1;
+    opacity: 0.8;
+    font-size: 1.5rem;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+}
+
+.modal-header .close:hover {
+    opacity: 1;
+}
+
+.form-control {
+    background-color: rgb(34, 34, 34);
+    color: #f1f1f1;
+    border: 1px solid rgb(44, 44, 44);
+    border-radius: 4px !important;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.text-muted {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-secondary {
+    background-color: rgb(44, 44, 44);
+    border-color: rgb(54, 54, 54);
+    color: #f1f1f1;
+}
+
+.btn-secondary:hover {
+    background-color: rgb(54, 54, 54);
+    border-color: rgb(64, 64, 64);
+}
+
+.btn-primary {
+    background-color: rgb(64, 128, 255);
+    border-color: rgb(54, 108, 220);
+    color: #f1f1f1;
+}
+
+.btn-primary:hover {
+    background-color: rgb(54, 108, 220);
+    border-color: rgb(44, 88, 190);
+}
+
+.btn-primary:disabled {
+    background-color: rgb(64, 128, 255);
+    border-color: rgb(54, 108, 220);
+    opacity: 0.5;
+}

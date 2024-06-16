@@ -1,0 +1,64 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgb(18, 18, 18) !important;
+    border-bottom: 1px solid darkslategray;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    margin-right: 50px; /* Adjust as needed for spacing on the right */
+}
+
+.navbar form .form-control {
+    background-color: rgb(24, 24, 24);
+    color: white;
+    border: none; /* Remove default border */
+    width: 400px;
+}
+
+.navbar form .form-control::placeholder {
+    color: gray; /* Placeholder text color */
+}
+
+.navbar form .btn {
+    background-color: transparent;
+    font-size: 20px;
+    border: none;
+    color: white;
+}
+
+.dropdown-menu {
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgb(18, 18, 18);
+}
+
+.dropdown-menu .list-group-item {
+    cursor: pointer;
+    background-color: rgb(24, 24, 24);
+    border: none; /* Remove any border */
+    padding: 10px 20px; /* Adjust padding as needed */
+}
+
+.dropdown-menu .dropdown-link {
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown-menu .list-group-item:hover {
+    background-color: black; /* Hover/focus background color */
+    color: white; /* Hover/focus text color */
+}
+
+.logo-name {
+    margin-left: 10px; /* Adjust spacing between logo and text */
+    color: white; /* Set the color for the logo name */
+}
+
