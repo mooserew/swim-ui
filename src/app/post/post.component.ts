@@ -92,7 +92,7 @@ export class PostComponent implements OnInit {
       this.post.content = this.post.content.replace(spotifyUrl, `<a href="${spotifyUrl}" target="_blank">${spotifyUrl}</a>`);
     }
   }
-
+  
   detectSpotifyType(url: string): string {
     if (url.includes('track')) {
       return 'track';

@@ -261,3 +261,19 @@ span.like-count {
 .username-container.username {
   margin-left: 0; /* remove left margin */
 }
+
+/* post.component.css */
+
+/* Default styles for larger screens */
+.spotify-embed {
+  width: 600px;
+  height: 380px;
+}
+
+/* Styles for smaller screens */
+@media (max-width: 768px) {
+  .spotify-embed {
+    width: 100%;
+    height: auto; /* This will maintain the aspect ratio */
+  }
+}
