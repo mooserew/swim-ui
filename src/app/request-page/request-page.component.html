@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4">
+        <div class="card-body">
+            <h5 class="card-title text-center mb-4">Request Password</h5>
+            <form #requestPasswordForm="ngForm" (ngSubmit)="onSubmit(requestPasswordForm)">
+                <div *ngIf="message" class="alert" [ngClass]="{'alert-success': messageType === 'success', 'alert-danger': messageType === 'error'}">
+                    {{ message }}
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" [(ngModel)]="email" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100" [disabled]="requestPasswordForm.invalid || isSubmitting">Submit</button>
+            </form>
+            <div class="text-center mt-3">
+                <span>Remember your password? <a [routerLink]="['/login']">Login</a></span>
+            </div>
+        </div>
+    </div>
+</div>

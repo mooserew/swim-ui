@@ -1,0 +1,49 @@
+<app-sidebar></app-sidebar>
+<app-topbar></app-topbar>
+
+<div class="container-fluid main-content">
+  <div class="row">
+    <div class="col-md-2"></div> <!-- Sidebar occupies this space -->
+    <div class="col-md-10">
+      <div class="user-profile-container">
+        <div class="profile-header row align-items-center">
+          <div class="col-md-2 text-center">
+            <img src="https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_1280.jpg" alt="{{ user?.userName }}'s profile picture" class="rounded-circle profile-picture">
+          </div>
+          <div class="col-md-8 d-flex align-items-start flex-column">
+            <div class="d-flex align-items-center">
+              <h2 class="user-name me-3">{{ user?.userName }}</h2>
+              <button *ngIf="userId !== currentUserId" class="btn" [ngClass]="isFollowing ? 'btn-secondary' : 'btn-primary'" (click)="toggleFollow()">
+                {{ isFollowing ? 'Unfollow' : 'Follow' }}
+              </button>
+              <button *ngIf="userId === currentUserId" class="btn btn-warning ms-3" (click)="openEditProfileModal()">
+                Edit
+              </button>
+            </div>
+            <div class="bio mt-2">
+              <p class="bio-content" *ngIf="user?.bio; else noBio">{{ user?.bio }}</p>
+              <ng-template #noBio><p class="bio-content">No bio yet.</p></ng-template>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="profile-stats d-flex justify-content-start mt-2">
+              <div class="stat-item me-4">
+                <span class="d-block fw-bold">{{ user?.followersCount }}</span>
+                <span>Followers</span>
+              </div>
+              <div class="stat-item">
+                <span class="d-block fw-bold">{{ user?.followingCount }}</span>
+                <span>Following</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="profile-posts-container">
+        <app-profile-posts></app-profile-posts>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-edit-profile-modal #editProfileModal></app-edit-profile-modal>

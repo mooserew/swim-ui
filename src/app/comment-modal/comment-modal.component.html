@@ -1,0 +1,45 @@
+<div id="commentModalContainer">
+  <div class="modal-header">
+    <h5 class="modal-title">Comments</h5>
+  </div>
+  <div class="modal-body">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="post mb-4">
+            <div class="card">
+              <div class="card-body">
+                <p class="card-text date">
+                  <small>Posted on {{ formatDate(post.createdAt) }}</small>
+                </p>
+                <div class="username-container">
+                  <img
+                    src="https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_1280.jpg"
+                    alt="Profile Picture"
+                    class="profile-pic"
+                  />
+                  <p class="card-text username">&#64;{{ post.username }}</p>
+                </div>
+                <p class="card-text content" [innerHTML]="post.content"></p>
+                <!-- Display fetched song details -->
+                <div *ngIf="embedUrl" class="details mt-3">
+                  <iframe
+                    [src]="embedUrl"
+                    [width]="embedWidth"
+                    [height]="embedHeight"
+                    frameborder="0"
+                    allowtransparency="true"
+                    allow="encrypted-media"
+                  >
+                  </iframe>
+                </div>
+                <hr class="content-divider" />
+              </div>
+            </div>
+          </div>
+          <app-comment-feed [post]="post"></app-comment-feed>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

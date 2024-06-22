@@ -1,76 +1,88 @@
+/* Modal content */
 .modal-content {
-    background-color: rgb(24, 24, 24);
+    background-color: #101010; /* simplified hex code */
     color: #f1f1f1;
     border: none;
     border-radius: 8px;
-}
-
-.modal-header, .modal-footer {
-    background-color: rgb(28, 28, 28);
+  }
+  
+  /* Modal header and footer */
+  .modal-header,.modal-footer {
+    background-color: #101010;
     border: none;
+    border-radius: 2px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.modal-header .modal-title {
+  }
+  
+  /* Modal title */
+  .modal-header.modal-title {
     margin: 0;
-    color: #e0e0e0;
-}
-
-.modal-header .close {
-    color: #f1f1f1;
+    color: #fff; /* simplified hex code */
+  }
+  
+  /* Close button */
+  .modal-header.close {
+    color: #fff;
     opacity: 0.8;
     font-size: 1.5rem;
     padding: 0;
     margin: 0;
     border: none;
     background: none;
-}
-
-.modal-header .close:hover {
+  }
+  
+  .modal-header.close:hover {
     opacity: 1;
-}
-
-.form-control {
-    background-color: rgb(34, 34, 34);
-    color: #f1f1f1;
-    border: 1px solid rgb(44, 44, 44);
-    border-radius: 4px !important;
-}
-
-.form-control::placeholder {
+  }
+  
+  /* Form control */
+  .form-control {
+    background-color: #222222; /* simplified hex code */
+    color: #fff;
+    border: 1px solid #2c2c2c; /* simplified hex code */
+    border-radius: 4px!important;
+  }
+  
+  /* Form control placeholder */
+  .form-control::placeholder {
     color: rgba(255, 255, 255, 0.6);
-}
-
-.text-muted {
+  }
+  
+  /* Text muted */
+  .text-muted {
     color: rgba(255, 255, 255, 0.5);
-}
-
-.btn-secondary {
-    background-color: rgb(44, 44, 44);
-    border-color: rgb(54, 54, 54);
+  }
+  
+  /* Button secondary */
+  .btn-secondary {
+    background-color: #2c2c2c; /* simplified hex code */
+    border-color: #363636; /* simplified hex code */
     color: #f1f1f1;
-}
-
-.btn-secondary:hover {
-    background-color: rgb(54, 54, 54);
-    border-color: rgb(64, 64, 64);
-}
-
-.btn-primary {
-    background-color: rgb(64, 128, 255);
-    border-color: rgb(54, 108, 220);
+  }
+  
+  .btn-secondary:hover {
+    background-color: #363636; /* simplified hex code */
+    border-color: #404040; /* simplified hex code */
+  }
+  
+  /* Button primary */
+  .btn-primary {
+    background-color: #4080ff; /* simplified hex code */
+    border-color: #366dc4; /* simplified hex code */
+    width: 100px;
     color: #f1f1f1;
-}
-
-.btn-primary:hover {
-    background-color: rgb(54, 108, 220);
-    border-color: rgb(44, 88, 190);
-}
-
-.btn-primary:disabled {
-    background-color: rgb(64, 128, 255);
-    border-color: rgb(54, 108, 220);
+  }
+  
+  .btn-primary:hover {
+    background-color: #366dc4; /* simplified hex code */
+    border-color: #2c58be; /* simplified hex code */
+  }
+  
+  /* Button primary disabled */
+  .btn-primary:disabled {
+    background-color: #4080ff; /* simplified hex code */
+    border-color: #366dc4; /* simplified hex code */
     opacity: 0.5;
-}
+  }

@@ -35,7 +35,7 @@ export class TopbarComponent {
     const query = inputElement.value.trim();
 
     if (query) {
-      this.http.get<User[]>(`http://localhost:8080/Swim/files/get-users?name=${query}`)
+      this.http.get<User[]>(`http://localhost:8080/Swim/user/get-users?name=${query}`)
         .subscribe(results => {
           this.searchResults = results;
         });

@@ -1,22 +1,29 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { CommentModalComponent } from '../comment-modal/comment-modal.component';
 
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css'],
 })
-export class PostComponent {
+export class PostComponent implements OnInit {
   @Input() post: any; // Input property to receive post data from parent component
   liked: boolean = false; // Track if the post is liked or not
   likeCount: number = 0; // Track the number of likes
+  embedUrl: SafeResourceUrl = ''; // Embed URL for the Spotify player
+  embedWidth: string = '300'; // Default width for embeds
+  embedHeight: string = '80'; // Default height for embeds
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private modalService: NgbModal, private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
     // Initialize like state and count
     this.fetchLikeStatus();
     this.fetchLikeCount();
+    this.processContent();
   }
 
   formatDate(date: string) {
@@ -72,5 +79,68 @@ export class PostComponent {
       }, error => {
         console.error('Error fetching like count:', error);
       });
+  }
+
+  processContent() {
+    const spotifyUrlPattern = /https:\/\/open\.spotify\.com\/(track|playlist|album|artist)\/[a-zA-Z0-9]+|https:\/\/open\.spotify\.com\/intl-[a-zA-Z0-9-]+\/(track|playlist|album|artist)\/[a-zA-Z0-9]+/;
+    const match = this.post.content.match(spotifyUrlPattern);
+    if (match) {
+      const spotifyUrl = match[0];
+      const type = this.detectSpotifyType(spotifyUrl);
+      this.setEmbedSize(type);
+      this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.generateEmbedUrl(spotifyUrl, type));
+      this.post.content = this.post.content.replace(spotifyUrl, `<a href="${spotifyUrl}" target="_blank">${spotifyUrl}</a>`);
+    }
+  }
+
+  detectSpotifyType(url: string): string {
+    if (url.includes('track')) {
+      return 'track';
+    } else if (url.includes('playlist')) {
+      return 'playlist';
+    } else if (url.includes('album')) {
+      return 'album';
+    } else if (url.includes('artist')) {
+      return 'artist';
+    }
+    return '';
+  }
+
+  setEmbedSize(type: string): void {
+    switch (type) {
+      case 'track':
+        this.embedWidth = '600';
+        this.embedHeight = '380';
+        break;
+      case 'playlist':
+      case 'album':
+        this.embedWidth = '600';
+        this.embedHeight = '380';
+        break;
+      case 'artist':
+        this.embedWidth = '600';
+        this.embedHeight = '380';
+        break;
+      default:
+        this.embedWidth = '600';
+        this.embedHeight = '380';
+        break;
+    }
+  }
+
+  generateEmbedUrl(url: string, type: string): string {
+    const id = this.extractIdFromUrl(url);
+    return `https://open.spotify.com/embed/${type}/${id}`;
+  }
+
+  extractIdFromUrl(url: string): string {
+    const parts = url.split('/');
+    // The ID is always the last part of the URL
+    return parts[parts.length - 1].split('?')[0];
+  }
+
+  openCommentModal() {
+    const modalRef = this.modalService.open(CommentModalComponent, { size: 'lg' });
+    modalRef.componentInstance.post = this.post;
   }
 }

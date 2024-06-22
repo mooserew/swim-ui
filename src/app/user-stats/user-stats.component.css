@@ -1,0 +1,51 @@
+/* Main content adjustment */
+.main-content {
+    margin-left: 300px; /* Adjust according to the sidebar width */
+    margin-top: 60px; /* Adjust according to the topbar height */
+    padding: 20px;
+    overflow: hidden; /* Prevent scrolling */
+    height: calc(100vh - 60px); /* Full height minus topbar height */
+  }
+
+  .user-stats-container {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
+  }
+  
+  .artist-card {
+    width: 150px;
+    margin: 10px;
+    text-align: center;
+  }
+  
+  .artist-picture {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .artist-name {
+    font-size: 1em;
+    font-family: "Segoe UI";
+    color: white;
+  }
+  
+  .text-white {
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    .main-content {
+      margin-left: 0; /* Remove left margin for small screens */
+      height: auto; /* Adjust height for small screens */
+    }
+  
+    .user-stats-container {
+      width: 100%;
+      margin-top: 60px; /* Ensure proper spacing on mobile */
+    }
+  }
+  

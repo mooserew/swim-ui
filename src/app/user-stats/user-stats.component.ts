@@ -1,0 +1,67 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SpotifyAuthService } from '../services/spotify-auth.service';
+
+@Component({
+  selector: 'app-user-stats',
+  templateUrl: './user-stats.component.html',
+  styleUrls: ['./user-stats.component.css']
+})
+export class UserStatsComponent implements OnInit {
+  topTracks: any;
+  topArtists: any;
+  accessToken: string | null = null;
+
+  constructor(
+    private spotifyAuthService: SpotifyAuthService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const code = params['code'];
+      if (code) {
+        this.spotifyAuthService.handleCallback(code).subscribe(response => {
+          this.accessToken = response.accessToken;
+          if (this.accessToken) {
+            localStorage.setItem('spotify_access_token', this.accessToken);
+          }
+          const refreshToken = response.refreshToken;
+          if (refreshToken) {
+            localStorage.setItem('spotify_refresh_token', refreshToken);
+          }
+          this.router.navigate(['/stats']); // Redirect to /stats after storing tokens
+        });
+      } else {
+        this.accessToken = localStorage.getItem('spotify_access_token');
+        const refreshToken = localStorage.getItem('spotify_refresh_token');
+        if (this.accessToken) {
+          this.getTopArtists();
+        } else if (refreshToken) {
+          this.spotifyAuthService.refreshAccessToken(refreshToken).subscribe(response => {
+            this.accessToken = response.accessToken;
+            if (this.accessToken) {
+              localStorage.setItem('spotify_access_token', this.accessToken);
+              this.getTopArtists();
+            }
+          });
+        } else {
+          this.login();
+        }
+      }
+    });
+  }
+
+  getTopArtists(): void {
+    if (this.accessToken) {
+      this.spotifyAuthService.getUserTopArtists(this.accessToken).subscribe(data => {
+        this.topArtists = data.items;
+      });
+    }
+  }
+
+  login(): void {
+    this.spotifyAuthService.login();
+  }
+}

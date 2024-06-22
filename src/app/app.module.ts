@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainComponent } from './main/main.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,6 +25,16 @@ import { PostComponent } from './post/post.component';
 import { PostCreateModalComponent } from './post-create-modal/post-create-modal.component';
 import { TopbarComponent } from './topbar/topbar.component';
 import { RegisterComponent } from './register/register.component';
+import { CommentModalComponent } from './comment-modal/comment-modal.component';
+import { CommentFeedComponent } from './comment-feed/comment-feed.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ProfilePostsComponent } from './profile-posts/profile-posts.component';
+import { RecommendedUsersComponent } from './recommended-users/recommended-users.component';
+import { RequestPageComponent } from './request-page/request-page.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
+import { SafeUrlPipe } from './safe-url.pipe';
+import { UserStatsComponent } from './user-stats/user-stats.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +47,17 @@ import { RegisterComponent } from './register/register.component';
     PostComponent,
     PostCreateModalComponent,
     TopbarComponent,
-    RegisterComponent
+    RegisterComponent,
+    CommentModalComponent,
+    CommentFeedComponent,
+    UserProfileComponent,
+    ProfilePostsComponent,
+    RecommendedUsersComponent,
+    RequestPageComponent,
+    PasswordResetComponent,
+    EditProfileModalComponent,
+    SafeUrlPipe,
+    UserStatsComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +65,7 @@ import { RegisterComponent } from './register/register.component';
     BrowserAnimationsModule,
     MatButtonModule,
     MatIconModule,
+    NgbModalModule,
     MatListModule,
     MatDialogModule,
     MatDividerModule,

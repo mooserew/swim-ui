@@ -1,41 +1,68 @@
 <nav class="side-nav">
-    <div class="sidebar">
-      <div class="sidebar-content">
-        <!-- Navigation Links -->
+  <div class="sidebar">
+    <div class="sidebar-content">
+      <!-- Navigation Links -->
+      <ul class="lists">
+        <li class="list">
+          <a routerLink="/" routerLinkActive="active-link" class="nav-link">
+            <i class="bx bx-home-alt icon"></i>
+            <span class="link">Home</span>
+          </a>
+        </li>
+        <hr class="content-divider" />
+        <!-- Grey line separator -->
+        <li class="list">
+          <a
+            routerLink="/profile/{{ username }}"
+            routerLinkActive="active-link"
+            class="nav-link"
+          >
+            <i class="bx bx-user icon"></i>
+            <span class="link">Profile</span>
+          </a>
+        </li>
+        <hr class="content-divider" />
+        <!-- Grey line separator -->
+        <li class="list">
+          <a
+            routerLink="/stats"
+            routerLinkActive="active-link"
+            class="nav-link"
+          >
+            <i class="bx bx-bar-chart-alt-2 icon"></i>
+            <span class="link"  (click)="login()">Stats</span>
+          </a>
+        </li>
+        <hr class="content-divider" />
+        <!-- Grey line separator -->
+        <!-- Add more list items as needed -->
+      </ul>
+
+      <!-- User Info and Logout Link -->
+      <div class="bottom-content">
+        <header>
+          <div class="user-info">
+            <img
+              src="https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_1280.jpg"
+              alt="Profile Picture"
+              class="profile-pic"
+              style="
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+              "
+            />
+            <span class="username">&#64;{{ username }}</span>
+          </div>
+        </header>
         <ul class="lists">
           <li class="list">
-            <a routerLink="/home" routerLinkActive="active-link" class="nav-link">
-              <i class="bx bx-home-alt icon"></i>
-              <span class="link">Página Principal</span>
-            </a>
+            <!-- Integrate LogoutComponent here -->
+            <app-logout></app-logout>
           </li>
-          <hr class="content-divider"> <!-- Grey line separator -->
-          <li class="list">
-            <a routerLink="/profile" routerLinkActive="active-link" class="nav-link">
-              <i class="bx bx-user icon"></i>
-              <span class="link">Perfil</span>
-            </a>
-          </li>
-          <hr class="content-divider"> <!-- Grey line separator -->
-          <!-- Add more list items as needed -->
         </ul>
-  
-        
-        <!-- User Info and Logout Link -->
-        <div class="bottom-content">
-          <header>
-            <div class="user-info">
-              <span class="username">&#64;{{ username }}</span>
-            </div>
-          </header>
-          <ul class="lists">
-            <li class="list">
-              <!-- Integrate LogoutComponent here -->
-              <app-logout></app-logout>
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
-  </nav>
-  
+  </div>
+</nav>

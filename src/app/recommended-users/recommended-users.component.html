@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-header bg-primary text-white">
+      <h4 class="card-title">Recommended Users</h4>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li *ngFor="let user of recommendedUsers" class="list-group-item">
+        <div class="media">
+          <img [src]="user.profilePicture || 'https://via.placeholder.com/50'" class="mr-3 rounded-circle" alt="{{ user.userName }}">
+          <div class="media-body">
+            <h5 class="mt-0">{{ user.userName }}</h5>
+            <p>{{ user.bio }}</p>
+            <button class="btn btn-sm btn-primary" (click)="followUser(user.userId)">Follow</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  

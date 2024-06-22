@@ -4,19 +4,51 @@
       <div class="post mb-4">
         <div class="card">
           <div class="card-body">
-            <p class="card-text username">&#64;{{ post.username }}</p>
-            <p class="card-text content">{{ post.content }}</p>
-            <hr class="content-divider"> <!-- Grey line separator -->
-            <p class="card-text date"><small class="text-muted">Posted on {{ formatDate(post.createdAt) }}</small></p>
-            <div class="action-buttons">
-              <button class="btn btn-link like-button" (click)="toggleLike()">
-                <i class="bi" [ngClass]="{'bi-heart-fill': liked, 'bi-heart': !liked}"></i>
-                <span class="like-count">{{ likeCount }}</span>
-              </button>
-              <button class="btn btn-link comment-button">
-                <i class="bi bi-chat"></i>
-              </button>
+            <div class="username-container">
+              <a [routerLink]="['/profile', post.username]">
+                <img
+                  src="https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_1280.jpg"
+                  alt="Profile Picture"
+                  class="profile-pic"
+                  style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;"
+                />
+              </a>
+              <a [routerLink]="['/profile', post.username]" class="username-link">
+                <p class="card-text username">&#64;{{ post.username }}</p>
+              </a>
             </div>
+            <p class="card-text content" [innerHTML]="post.content"></p>
+            <!-- Display fetched song details -->
+            <div *ngIf="embedUrl" class="details mt-3">
+              <iframe
+                [src]="embedUrl"
+                [width]="embedWidth"
+                [height]="embedHeight"
+                frameborder="0"
+                allowtransparency="true"
+                allow="encrypted-media">
+              </iframe>
+            </div>
+          </div>
+          <hr class="content-divider" />
+          <!-- Grey line separator -->
+          <p class="card-text date">
+            <small class="text-muted">Posted on {{ formatDate(post.createdAt) }}</small>
+          </p>
+          <div class="menu-container">
+            <button class="menu-button">&#x22EE;</button>
+            <div class="menu" *ngIf="post.showMenu">
+              <button class="delete-button">Delete</button>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button class="btn btn-link like-button" (click)="toggleLike()">
+              <i class="bi" [ngClass]="{ 'bi-heart-fill': liked, 'bi-heart': !liked }"></i>
+              <span class="like-count">{{ likeCount }}</span>
+            </button>
+            <button class="btn btn-link comment-button" (click)="openCommentModal()">
+              <i class="bi bi-chat"></i>
+            </button>
           </div>
         </div>
       </div>

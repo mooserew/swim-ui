@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PostService {
-  private apiUrl = 'http://localhost:8080/Swim/post/following';
+  private feedUrl = 'http://localhost:8080/Swim/post/following';
+  private profilePostsUrl = 'http://localhost:8080/Swim/post/get';
 
   constructor(private http: HttpClient) {}
 
@@ -20,10 +21,24 @@ export class PostService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
-      
     });
 
-    return this.http.get(this.apiUrl, { headers, withCredentials: true });
+    return this.http.get(this.feedUrl, { headers, withCredentials: true });
+  }
+
+  getPostsByUserName(username: string): Observable<any> {
+    const token = this.getTokenFromCookie();
+    if (!token) {
+      throw new Error('No token found in cookies');
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    const url = `${this.profilePostsUrl}/${username}`;
+    return this.http.get(url, { headers, withCredentials: true });
   }
 
   private getTokenFromCookie(): string | null {

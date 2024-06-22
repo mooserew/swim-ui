@@ -4,6 +4,10 @@ import { AuthGuard } from '../app/guards/auth.guards';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { RegisterComponent } from './register/register.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { RequestPageComponent } from './request-page/request-page.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { UserStatsComponent } from './user-stats/user-stats.component';
 
 const routes: Routes = [
   {
@@ -18,7 +22,26 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent
-  }
+  },
+  {
+    path: 'profile/:username', 
+    component: UserProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'password-request', 
+    component: RequestPageComponent
+  },
+  { path: 'reset-password', 
+    component: PasswordResetComponent 
+  },
+  {
+    path: 'stats', 
+    component: UserStatsComponent,
+    canActivate: [AuthGuard] // Protect this route
+  },
+  { path: 'stats', component: UserStatsComponent },
+  { path: 'callback', component: UserStatsComponent },
 ];
 
 @NgModule({
