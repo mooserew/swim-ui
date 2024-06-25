@@ -1,29 +1,32 @@
-# Use the official Node.js image as the base image
-FROM node:14 AS build
+# Use the official Node.js 20.14.0 image
+FROM node:20.14.0 AS build
 
-# Set the working directory
+# Set a working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Install Angular CLI 18.0.4 globally
+RUN npm install -g @angular/cli@18.0.4
+
+# Copy package.json and package-lock.json (if available)
 COPY package*.json ./
 
-# Install dependencies
+# Install npm dependencies
 RUN npm install
 
-# Copy the rest of the application
+# Copy the rest of the application code
 COPY . .
 
-# Build the Angular app with the production configuration
-RUN npm run build -- --configuration production
+# Build the Angular app in production mode
+RUN ng build --configuration production
 
-# Use a lightweight web server to serve the Angular app
+# Use nginx to serve the built Angular app
 FROM nginx:alpine
 
-# Copy the build output to the Nginx web server directory
-COPY --from=build /app/dist/browser /usr/share/nginx/html
+# Copy the built Angular app from the previous stage
+COPY --from=build /app/dist /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
 
-# Start the Nginx server
+# Start nginx server
 CMD ["nginx", "-g", "daemon off;"]
