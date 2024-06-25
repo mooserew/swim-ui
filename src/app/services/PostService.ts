@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PostService {
-  private feedUrl = 'http://localhost:8080/Swim/post/following';
-  private profilePostsUrl = 'http://localhost:8080/Swim/post/get';
+  private feedUrl = 'https://swim-api-production-1a4b.up.railway.app/post/following';
+  private profilePostsUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/post/get';
 
   constructor(private http: HttpClient) {}
 

@@ -1,14 +1,10 @@
-<head>
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-</head>
-
 <nav class="navbar navbar-dark bg-dark">
-  <div class="container-fluid">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
     <a class="navbar-brand" href="">
       <img src="/logo-no-bg.png" alt="Swim Logo" width="30" height="30" class="d-inline-block align-top">
       <span class="logo-name">Swim</span>
     </a>
-    <form class="d-flex position-relative">
+    <form class="d-flex position-relative justify-content-center mx-auto">
       <div class="input-group">
         <span class="input-group-text" id="basic-addon1"><i class='bx bx-search'></i></span>
         <input class="form-control" type="search" placeholder="Search for users" aria-label="Search" (input)="search($event)">
@@ -24,5 +20,9 @@
         </ul>
       </div>
     </form>
+    <div class="user-info d-flex align-items-center">
+      <img src="https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_1280.jpg" alt="Profile Picture" class="profile-pic" />
+      <span class="username">&#64;{{ username }}</span>
+    </div>
   </div>
 </nav>

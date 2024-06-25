@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
 
   isPasswordVisible: boolean = false;
+  loginError: string | null = null;
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -21,19 +22,24 @@ export class LoginComponent {
     if (form.valid) {
       const username = form.value.username;
       const password = form.value.password;
-
+  
       this.authService.login({ username, password }).subscribe({
-        next: () => {
-          // Handle successful login (redirect, toast message, etc.)
+        next: (loginResponse) => {
+          // Handle successful login
           console.log('Login successful');
-          
-          // Redirect to the index or any other route upon successful login
-          this.router.navigate(['']); // Adjust '/index' to your desired route
         },
         error: (error) => {
           console.error('Login error:', error);
-          // Display error message to the user
-          // Example: this.loginFailToast.toast('show');
+          if (error.error && error.error.message) {
+            // Check for specific error message from server response
+            this.loginError = error.error.message;
+          } else if (error.status === 404) {
+            this.loginError = 'Username not found.';
+          } else if (error.status === 401) {
+            this.loginError = 'Incorrect username or password.';
+          } else {
+            this.loginError = 'An unexpected error occurred. Please try again later.';
+          }
         }
       });
     }

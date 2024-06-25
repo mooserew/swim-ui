@@ -23,7 +23,7 @@ export class RequestPageComponent {
       this.isSubmitting = true;
 
       const params = new HttpParams().set('email', this.email);
-      this.http.post('http://localhost:8080/password/request-reset', params, { observe: 'response' }).subscribe(
+      this.http.post('https://swim-api-production-1a4b.up.railway.app/password/request-reset', params, { observe: 'response' }).subscribe(
         response => {
           if (response.status === 200) {
             // Success response handling can be placed here if needed

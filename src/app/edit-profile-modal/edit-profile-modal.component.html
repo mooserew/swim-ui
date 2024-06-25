@@ -1,20 +1,14 @@
-<!-- edit-profile-modal.component.html -->
-<ng-template #editProfileModal let-modal>
-    <div class="modal-header">
-        <h5 class="modal-title">Edit Profile</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-        <form (ngSubmit)="saveChanges()">
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" [(ngModel)]="user.userName" name="username" required>
-            </div>
-            <div class="mb-3">
-                <label for="bio" class="form-label">Bio</label>
-                <textarea class="form-control" id="bio" [(ngModel)]="user.bio" name="bio" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-        </form>
-    </div>
-</ng-template>
+<div class="modal-header">
+    <h5 class="modal-title">Edit Profile</h5>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="profileForm" (ngSubmit)="saveChanges()">
+      <div class="mb-3">
+        <label for="bio" class="form-label">Bio</label>
+        <textarea class="form-control" id="bio" formControlName="bio" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Save changes</button>
+    </form>
+  </div>
+  

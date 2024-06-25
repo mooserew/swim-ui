@@ -1,88 +1,128 @@
 /* Modal content */
 .modal-content {
-    background-color: #101010; /* simplified hex code */
-    color: #f1f1f1;
-    border: none;
-    border-radius: 8px;
-  }
-  
-  /* Modal header and footer */
-  .modal-header,.modal-footer {
-    background-color: #101010;
-    border: none;
-    border-radius: 2px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  /* Modal title */
-  .modal-header.modal-title {
-    margin: 0;
-    color: #fff; /* simplified hex code */
-  }
-  
-  /* Close button */
-  .modal-header.close {
-    color: #fff;
-    opacity: 0.8;
-    font-size: 1.5rem;
-    padding: 0;
-    margin: 0;
-    border: none;
-    background: none;
-  }
-  
-  .modal-header.close:hover {
-    opacity: 1;
-  }
-  
-  /* Form control */
-  .form-control {
-    background-color: #222222; /* simplified hex code */
-    color: #fff;
-    border: 1px solid #2c2c2c; /* simplified hex code */
-    border-radius: 4px!important;
-  }
-  
-  /* Form control placeholder */
-  .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-  }
-  
-  /* Text muted */
-  .text-muted {
-    color: rgba(255, 255, 255, 0.5);
-  }
-  
-  /* Button secondary */
-  .btn-secondary {
-    background-color: #2c2c2c; /* simplified hex code */
-    border-color: #363636; /* simplified hex code */
-    color: #f1f1f1;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #363636; /* simplified hex code */
-    border-color: #404040; /* simplified hex code */
-  }
-  
-  /* Button primary */
-  .btn-primary {
-    background-color: #4080ff; /* simplified hex code */
-    border-color: #366dc4; /* simplified hex code */
-    width: 100px;
-    color: #f1f1f1;
-  }
-  
-  .btn-primary:hover {
-    background-color: #366dc4; /* simplified hex code */
-    border-color: #2c58be; /* simplified hex code */
-  }
-  
-  /* Button primary disabled */
-  .btn-primary:disabled {
-    background-color: #4080ff; /* simplified hex code */
-    border-color: #366dc4; /* simplified hex code */
-    opacity: 0.5;
-  }
+  background-color: #101010;
+  color: #f1f1f1;
+  border: none;
+  border-radius: 4px;
+  padding: 1rem; /* Added padding for better spacing */
+  overflow: hidden; /* Ensures no white edges are shown */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Added box shadow */
+}
+
+/* Modal header and footer */
+.modal-header, .modal-footer {
+  background-color: #101010;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem; /* Added padding for better spacing */
+}
+
+/* Ensuring header, content and footer are bordered correctly together */
+.modal-header {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.modal-footer {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+/* Modal title */
+.modal-header .modal-title {
+  margin: 0;
+  color: #fff; /* simplified hex code */
+}
+
+/* Close button */
+.modal-header .close {
+  color: #fff;
+  opacity: 0.8;
+  font-size: 1.5rem;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+}
+
+.modal-header .close:hover {
+  opacity: 1;
+}
+
+/* Form control */
+.form-control {
+  background-color: #222222;
+  color: #fff;
+  border: 1px solid #2c2c2c;
+  border-radius: 4px!important;
+  resize: none; /* Allow only vertical resizing */
+  height: 150px;
+  max-height: 150px; /* Set a maximum height */
+  outline: none; /* Remove outline when clicking */
+}
+
+/* Form control placeholder */
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.text-limit {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Button secondary */
+.btn-secondary {
+  background-color: #2c2c2c;
+  border-color: #363636;
+  color: #f1f1f1;
+}
+
+.btn-secondary:hover {
+  background-color: #363636;
+  border-color: #404040;
+}
+
+/* Button primary */
+.btn-primary {
+  background-color: #4080ff;
+  border-color: #366dc4;
+  width: 100px;
+  color: #f1f1f1;
+  margin-left: auto; /* Added to push the button to the right */
+}
+
+.btn-primary:hover {
+  background-color: #366dc4;
+  border-color: #2c58be;
+}
+
+/* Button primary disabled */
+.btn-primary:disabled {
+  background-color: #4080ff;
+  border-color: #366dc4;
+  opacity: 0.5;
+}
+
+.toast-container {
+  top: 60px !important; /* Adjust this value to be below your top bar */
+  right: 1rem;
+  z-index: 11;
+}
+
+.toast-body {
+  color: #fff;
+}
+
+.text-bg-success {
+  background-color: #28a745;
+}
+
+.text-bg-danger {
+  background-color: #dc3545;
+}
+
+.btn-close-white {
+  filter: invert(1);
+}

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './../services/auth_service';
 import { HttpClient } from '@angular/common/http';
 
 interface User {
@@ -11,12 +12,18 @@ interface User {
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.css']
 })
-export class TopbarComponent {
+export class TopbarComponent implements OnInit {
   searchResults: User[] = [];
   searchTerm: string = ''; // Variable to store search term
+  username: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private authService: AuthService,private http: HttpClient) {}
 
+  ngOnInit(): void {
+    this.authService
+      .getUsernameFromToken()
+      .then((username) => (this.username = username));
+  }
   // Function to handle input focus
   handleInputFocus() {
     this.searchTerm = ''; // Clear search term when focused
@@ -35,7 +42,7 @@ export class TopbarComponent {
     const query = inputElement.value.trim();
 
     if (query) {
-      this.http.get<User[]>(`http://localhost:8080/Swim/user/get-users?name=${query}`)
+      this.http.get<User[]>(`https://swim-api-production-1a4b.up.railway.app/user/get-users?name=${query}`)
         .subscribe(results => {
           this.searchResults = results;
         });

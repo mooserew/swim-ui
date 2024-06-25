@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SpotifyAuthService {
-  private apiUrl = 'http://localhost:8080';
+  private apiUrl = 'https://swim-api-production-1a4b.up.railway.app';
 
   constructor(private http: HttpClient) {}
 

@@ -2,14 +2,34 @@
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title" id="postModalLabel">Create Post</h5>
+      <button type="button" class="close" (click)="modal.dismiss()">&times;</button>
     </div>
     <div class="modal-body">
-      <textarea [(ngModel)]="postContent" class="form-control" id="postContent" rows="4" placeholder="What's on your mind?" maxlength="250"></textarea>
-      <div id="charCount" class="text-muted">Characters: {{ postContent.length }}/250</div>
+      <textarea [(ngModel)]="postContent" class="form-control" id="postContent" rows="4" placeholder="What have you been listening to lately?" maxlength="250"></textarea>
+      <div id="charCount" class="text-limit">Characters: {{ postContent.length }}/250</div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
       <button type="button" class="btn btn-primary" [disabled]="postContent.length > 250 || postContent.length === 0" (click)="createPost(modal)">Post</button>
     </div>
   </div>
 </ng-template>
+
+<!-- Toast notifications -->
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 11">
+  <div #postSuccessToast class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Post created successfully.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+  <div #postErrorToast class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Error creating post.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>

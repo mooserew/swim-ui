@@ -14,7 +14,7 @@ export class UserProfileComponent implements OnInit {
   userId: number | undefined;
   currentUserId: number | undefined;
   isFollowing: boolean = false;
-  private baseUrl = 'http://localhost:8080/Swim';
+  private baseUrl = 'https://swim-api-production-1a4b.up.railway.app/';
 
   constructor(
     private http: HttpClient,
@@ -90,14 +90,11 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  openEditProfileModal() {
-    const modalRef = this.modalService.open(EditProfileModalComponent, { size: 'lg' });
+  openEditProfileModal(): void {
+    const modalRef = this.modalService.open(EditProfileModalComponent);
     modalRef.componentInstance.user = this.user;
-
-    modalRef.result.then((result) => {
-      // Handle the result here if needed
-    }, (reason) => {
-      // Handle the dismiss reason here if needed
+    modalRef.componentInstance.bioUpdated.subscribe((newBio: string) => {
+      this.user.bio = newBio;
     });
   }
 }

@@ -44,7 +44,7 @@ export class PostComponent implements OnInit {
   }
 
   likePost() {
-    this.http.post(`http://localhost:8080/Swim/post/like?postId=${this.post.postId}`, null, { withCredentials: true })
+    this.http.post(`https://swim-api-production-1a4b.up.railway.app/Swim/post/like?postId=${this.post.postId}`, null, { withCredentials: true })
       .subscribe(() => {
         this.liked = true;
         this.fetchLikeCount(); // Update like count after liking
@@ -54,7 +54,7 @@ export class PostComponent implements OnInit {
   }
 
   unlikePost() {
-    this.http.delete(`http://localhost:8080/Swim/post/unlike?postId=${this.post.postId}`, { withCredentials: true })
+    this.http.delete(`https://swim-api-production-1a4b.up.railway.app/Swim/post/unlike?postId=${this.post.postId}`, { withCredentials: true })
       .subscribe(() => {
         this.liked = false;
         this.fetchLikeCount(); // Update like count after unliking
@@ -64,7 +64,7 @@ export class PostComponent implements OnInit {
   }
 
   fetchLikeStatus() {
-    this.http.get<number[]>(`http://localhost:8080/Swim/post/liked-posts`, { withCredentials: true })
+    this.http.get<number[]>(`https://swim-api-production-1a4b.up.railway.app/Swim/post/liked-posts`, { withCredentials: true })
       .subscribe((likedPostIds: number[]) => {
         this.liked = likedPostIds.includes(this.post.postId);
       }, error => {
@@ -73,7 +73,7 @@ export class PostComponent implements OnInit {
   }
 
   fetchLikeCount() {
-    this.http.get<number>(`http://localhost:8080/Swim/post/like-count/${this.post.postId}`, { withCredentials: true })
+    this.http.get<number>(`https://swim-api-production-1a4b.up.railway.app/Swim/post/like-count/${this.post.postId}`, { withCredentials: true })
       .subscribe((count: number) => {
         this.likeCount = count;
       }, error => {

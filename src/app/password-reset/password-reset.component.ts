@@ -37,7 +37,7 @@ export class PasswordResetComponent implements OnInit {
         .set('token', this.token)
         .set('newPassword', this.newPassword);
 
-      this.http.post('http://localhost:8080/password/reset', params, { observe: 'response' }).subscribe(
+      this.http.post('https://swim-api-production-1a4b.up.railway.app/password/reset', params, { observe: 'response' }).subscribe(
         response => {
           if (response.status === 200) {
             this.message = 'Password has been reset successfully.';

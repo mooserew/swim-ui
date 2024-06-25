@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainComponent } from './main/main.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -29,7 +28,6 @@ import { CommentModalComponent } from './comment-modal/comment-modal.component';
 import { CommentFeedComponent } from './comment-feed/comment-feed.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ProfilePostsComponent } from './profile-posts/profile-posts.component';
-import { RecommendedUsersComponent } from './recommended-users/recommended-users.component';
 import { RequestPageComponent } from './request-page/request-page.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
@@ -52,7 +50,6 @@ import { UserStatsComponent } from './user-stats/user-stats.component';
     CommentFeedComponent,
     UserProfileComponent,
     ProfilePostsComponent,
-    RecommendedUsersComponent,
     RequestPageComponent,
     PasswordResetComponent,
     EditProfileModalComponent,
@@ -73,7 +70,8 @@ import { UserStatsComponent } from './user-stats/user-stats.component';
     MatSnackBarModule,
     FlexLayoutModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule // Include ReactiveFormsModule here
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

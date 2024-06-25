@@ -21,8 +21,8 @@ interface UsernameResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private loginUrl = 'http://localhost:8080/Swim/login'; // Backend login URL
-  private logoutUrl = 'http://localhost:8080/Swim/logout'; // Backend logout URL
+  private loginUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/login'; // Backend login URL
+  private logoutUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/logout'; // Backend logout URL
 
   constructor(private http: HttpClient) {}
 
@@ -37,7 +37,7 @@ export class AuthService {
       .pipe(
         tap((response) => {
           if (response.token) {
-            // Token is now stored in a cookie named 'jwt'
+            this.redirectToIndex();
             // No need to store in localStorage anymore
             // You can handle successful login in the component
           }
@@ -78,7 +78,7 @@ export class AuthService {
   }
 
   redirectToIndex(): void {
-    window.location.href = 'index.html';
+    window.location.href = '/home';
   }
 
   private deleteCookie(name: string): void {
@@ -99,7 +99,7 @@ export class AuthService {
 
   getUsernameFromToken(): Promise<string> {
     return this.http
-      .get<UsernameResponse>('http://localhost:8080/Swim/username', {
+      .get<UsernameResponse>('https://swim-api-production-1a4b.up.railway.app/Swim/username', {
         withCredentials: true,
       })
       .toPromise()
@@ -117,6 +117,6 @@ export class AuthService {
   }
 
   exchangeAuthorizationCode(code: string): Observable<any> {
-    return this.http.get(`http://localhost:8080/callback?code=${code}`);
+    return this.http.get(`https://swim-api-production-1a4b.up.railway.app/callback?code=${code}`);
   }
 }

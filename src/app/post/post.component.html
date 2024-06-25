@@ -19,18 +19,10 @@
             </div>
             <p class="card-text content" [innerHTML]="post.content"></p>
             <!-- Display fetched song details -->
-            <div *ngIf="embedUrl" class="details mt-3">
-              <iframe
-                [src]="embedUrl"
-                [width]="embedWidth"
-                [height]="embedHeight"
-                frameborder="0"
-                class="spotify-embed"
-                allowtransparency="true"
-                allow="encrypted-media">
-              </iframe>
+            <div class="spotify-embed-container" *ngIf="embedUrl">
+              <iframe class="spotify-embed" [src]="embedUrl" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
             </div>
-          </div>
+            
           <hr class="content-divider" />
           <!-- Grey line separator -->
           <p class="card-text date">

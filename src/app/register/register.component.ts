@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
       password: loginForm.value.password
     };
 
-    this.http.post('http://localhost:8080/Swim/register', userRegistrationRequest, { responseType: 'text' })
+    this.http.post('https://swim-api-production-1a4b.up.railway.app/Swim/register', userRegistrationRequest, { responseType: 'text' })
      .subscribe(response => {
         console.log(response);
         this.router.navigate(['/login']);
