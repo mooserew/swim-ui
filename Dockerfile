@@ -23,7 +23,7 @@ RUN ng build --configuration production
 FROM nginx:alpine
 
 # Copy the built Angular app from the previous stage
-COPY --from=build /app/dist/swim-ui-angular /usr/share/nginx/html
+COPY --from=build /app/dist/swim-ui-angular/browser /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
