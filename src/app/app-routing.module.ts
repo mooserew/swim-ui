@@ -15,6 +15,10 @@ const routes: Routes = [
     component: MainComponent,
   },
   {
+    path: 'home',
+    component: MainComponent,
+  },
+  {
     path: 'login',
     component: LoginComponent
   },
