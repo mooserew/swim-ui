@@ -19,14 +19,14 @@ COPY . .
 # Build the Angular app in production mode
 RUN ng build --configuration production
 
-# Use nginx to serve the built Angular app
-FROM nginx:alpine
+# Install serve to serve the application
+RUN npm install -g serve
 
-# Copy the built Angular app from the previous stage
-COPY --from=build /app/dist/swim-ui-angular/browser /usr/share/nginx/html
+# Copy the Node.js server file
+COPY server.js .
 
-# Expose port 80
-EXPOSE 80
+# Expose port 8080
+EXPOSE 8080
 
-# Start nginx server
-CMD ["nginx", "-g", "daemon off;"]
+# Command to run the Node.js server
+CMD ["node", "server.js"]
