@@ -13,12 +13,11 @@ export class PostFeedComponent implements OnInit {
 
   ngOnInit(): void {
     this.postService.getPosts().subscribe(
-      (data: any[]) => { // Specify data as an array of any type
-        // Sort posts by createdAt in descending order
+      (data: any[]) => {
         this.posts = data.sort((a: any, b: any) => {
           const dateA = new Date(a.createdAt).getTime();
           const dateB = new Date(b.createdAt).getTime();
-          return dateB - dateA; // Sort descending
+          return dateB - dateA;
         });
       },
       error => {

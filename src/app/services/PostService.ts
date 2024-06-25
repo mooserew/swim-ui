@@ -7,41 +7,34 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root'
 })
 export class PostService {
-  private feedUrl = 'https://swim-api-production-1a4b.up.railway.app/post/following';
+  private feedUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/post/following';
   private profilePostsUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/post/get';
+  private createPostUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/post/create';
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
-  getPosts(): Observable<any> {
-    const token = this.getTokenFromCookie();
-    if (!token) {
-      throw new Error('No token found in cookies');
-    }
-
-    const headers = new HttpHeaders({
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.cookieService.get('jwtToken');
+    return new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
+  }
 
+  getPosts(): Observable<any> {
+    const headers = this.getAuthHeaders();
     return this.http.get(this.feedUrl, { headers, withCredentials: true });
   }
 
   getPostsByUserName(username: string): Observable<any> {
-    const token = this.getTokenFromCookie();
-    if (!token) {
-      throw new Error('No token found in cookies');
-    }
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-
+    const headers = this.getAuthHeaders();
     const url = `${this.profilePostsUrl}/${username}`;
     return this.http.get(url, { headers, withCredentials: true });
   }
 
-  private getTokenFromCookie(): string | null {
-    return this.cookieService.get('jwt');
+  createPost(content: string): Observable<any> {
+    const headers = this.getAuthHeaders();
+    const postRequest = { content };
+    return this.http.post(this.createPostUrl, postRequest, { headers, withCredentials: true });
   }
 }

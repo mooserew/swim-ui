@@ -1,8 +1,7 @@
 import { Component, ViewChild, TemplateRef, ElementRef, AfterViewInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CookieService } from 'ngx-cookie-service';
 import { Toast } from 'bootstrap';
+import { PostService } from '../services/PostService';
 
 @Component({
   selector: 'app-post-create-modal',
@@ -15,11 +14,9 @@ export class PostCreateModalComponent implements AfterViewInit {
   @ViewChild('postErrorToast') postErrorToast!: ElementRef;
   postContent: string = '';
 
-  constructor(private http: HttpClient, private modalService: NgbModal, private cookieService: CookieService) {}
+  constructor(private modalService: NgbModal, private postService: PostService) {}
 
   ngAfterViewInit() {
-    // This will be called after the view has been initialized
-    // Ensuring that the ViewChild elements are properly referenced
     if (!this.postSuccessToast) {
       console.error('postSuccessToast element not found');
     }
@@ -33,25 +30,14 @@ export class PostCreateModalComponent implements AfterViewInit {
   }
 
   createPost(modal: any) {
-    const token = this.cookieService.get('jwtToken'); // Get the JWT token from cookies
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+    this.postService.createPost(this.postContent).subscribe(response => {
+      console.log('Post created:', response);
+      modal.close();
+      this.showSuccessToast();
+    }, error => {
+      console.error('Error creating post:', error);
+      this.showErrorToast();
     });
-
-    const postRequest = {
-      content: this.postContent
-    };
-
-    this.http.post('https://swim-api-production-1a4b.up.railway.app/Swim/post/create', postRequest, { headers, withCredentials: true })
-      .subscribe(response => {
-        console.log('Post created:', response);
-        modal.close();
-        this.showSuccessToast();
-      }, error => {
-        console.error('Error creating post:', error);
-        this.showErrorToast();
-      });
   }
 
   showSuccessToast() {
