@@ -42,7 +42,7 @@ export class TopbarComponent implements OnInit {
     const query = inputElement.value.trim();
 
     if (query) {
-      this.http.get<User[]>(`https://swim-api-production-1a4b.up.railway.app/user/get-users?name=${query}`)
+      this.http.get<User[]>(`https://swim-api-production-1a4b.up.railway.app/Swim/user/get-users?name=${query}`)
         .subscribe(results => {
           this.searchResults = results;
         });

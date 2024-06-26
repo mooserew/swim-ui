@@ -29,7 +29,6 @@ const routes: Routes = [
   {
     path: 'profile/:username', 
     component: UserProfileComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'password-request', 
@@ -41,7 +40,6 @@ const routes: Routes = [
   {
     path: 'stats', 
     component: UserStatsComponent,
-    canActivate: [AuthGuard] // Protect this route
   },
   { path: 'stats', component: UserStatsComponent },
   { path: 'callback', component: UserStatsComponent },

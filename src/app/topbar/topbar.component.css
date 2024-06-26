@@ -113,13 +113,14 @@ header {
 .user-info {
     display: flex;
     align-items: center;
-    margin-left: 20px; /* Adjust the spacing to move to the left */
-    padding-left: 10px; /* Adjust the spacing to move to the left */
+    margin-left: 0; /* Remove left margin */
+    padding-left: 0; /* Remove left padding */
+    margin-right: 20px; /* Add margin to the right for spacing */
 }
 
 .profile-pic {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     object-fit: cover;
 }

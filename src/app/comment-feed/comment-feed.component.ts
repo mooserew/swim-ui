@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-comment-feed',
@@ -13,14 +14,12 @@ export class CommentFeedComponent implements OnInit, OnDestroy {
   authenticatedUserId: number | null = null;
   private documentClickListener: (() => void) | null = null;
 
-  constructor(private http: HttpClient, private renderer: Renderer2) {}
+  constructor(private http: HttpClient, private renderer: Renderer2, private cookieService: CookieService) {}
 
   ngOnInit(): void {
-    this.getAuthenticatedUserId().then(userId => {
-      this.authenticatedUserId = userId;
-      console.log('Authenticated User ID:', this.authenticatedUserId); // Debug log
-      this.loadComments();
-    });
+    this.authenticatedUserId = this.getAuthenticatedUserId();
+    console.log('Authenticated User ID:', this.authenticatedUserId); // Debug log
+    this.loadComments();
 
     // Add document click listener
     this.documentClickListener = this.renderer.listen('document', 'click', (event) => {
@@ -36,14 +35,9 @@ export class CommentFeedComponent implements OnInit, OnDestroy {
     }
   }
 
-  getAuthenticatedUserId(): Promise<number | null> {
-    return this.http.get<{ id?: number }>('http://localhost:8080/Swim/userid', { withCredentials: true })
-      .toPromise()
-      .then(response => response?.id ?? null)
-      .catch(error => {
-        console.error('Error fetching authenticated user ID:', error);
-        return null;
-      });
+  getAuthenticatedUserId(): number | null {
+    const userId = this.cookieService.get('jwtToken');
+    return userId ? Number(userId) : null;
   }
 
   loadComments() {
@@ -51,7 +45,7 @@ export class CommentFeedComponent implements OnInit, OnDestroy {
       withCredentials: true
     };
 
-    this.http.get<any[]>(`http://localhost:8080/Swim/post/get-comments/${this.post.postId}`, options)
+    this.http.get<any[]>(`https://swim-api-production-1a4b.up.railway.app/Swim/post/get-comments/${this.post.postId}`, options)
       .subscribe(data => {
         this.comments = data.reverse(); // Reverse the order of comments
         console.log('Comments:', this.comments); // Debug log
@@ -70,7 +64,7 @@ export class CommentFeedComponent implements OnInit, OnDestroy {
       withCredentials: true
     };
 
-    this.http.post<any>(`http://localhost:8080/Swim/post/comment/${this.post.postId}`, formData, options)
+    this.http.post<any>(`https://swim-api-production-1a4b.up.railway.app/Swim/post/comment/${this.post.postId}`, formData, options)
       .subscribe((comment: any) => {
         this.comments.unshift(comment); // Add the new comment at the beginning
         this.newComment = '';
@@ -102,7 +96,7 @@ export class CommentFeedComponent implements OnInit, OnDestroy {
       withCredentials: true
     };
 
-    this.http.delete(`http://localhost:8080/Swim/post/delete-comment/${commentId}`, options)
+    this.http.delete(`https://swim-api-production-1a4b.up.railway.app/Swim/post/delete-comment/${commentId}`, options)
       .subscribe(() => {
         this.comments = this.comments.filter(comment => comment.commentId !== commentId);
       });

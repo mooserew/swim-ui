@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
 
 interface LoginRequest {
   username: string;
@@ -24,7 +25,7 @@ export class AuthService {
   private loginUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/login'; // Backend login URL
   private logoutUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/logout'; // Backend logout URL
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
   login(loginRequest: LoginRequest): Observable<LoginResponse> {
     return this.http
@@ -57,8 +58,8 @@ export class AuthService {
       .pipe(
         tap(() => {
           // Manually delete the JWT cookie by setting an expired date
+          this.cookieService.delete('jwt', '/');
           window.location.href = '/login';
-          this.deleteCookie('jwt');
           localStorage.clear();
           // Optionally perform other logout actions (clear state, etc.)
         }),
@@ -70,7 +71,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return this.getCookie('jwt') !== '';
+    return this.cookieService.check('jwt');
   }
 
   redirectToLogin(): void {
@@ -79,22 +80,6 @@ export class AuthService {
 
   redirectToIndex(): void {
     window.location.href = '/home';
-  }
-
-  private deleteCookie(name: string): void {
-    document.cookie =
-      name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-  }
-
-  private getCookie(name: string): string {
-    const nameEQ = name + '=';
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return '';
   }
 
   getUsernameFromToken(): Promise<string> {

@@ -1,6 +1,4 @@
-body {
-  font-family: "Poppins";
-}
+
 
 .comment-feed {
   color: #ffffff;
@@ -69,11 +67,10 @@ body {
 }
 
 .add-comment-form .btn-primary {
-  font-family: "Poppins", "sans-serif"; /* or any other font you prefer */
   background-color: #007bff;
   border-color: #007bff;
   color: #ffffff;
-  border-radius: 5px;
+  border-radius: 5px; 
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
   display: flex;

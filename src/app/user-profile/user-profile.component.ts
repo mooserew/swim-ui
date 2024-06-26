@@ -14,7 +14,7 @@ export class UserProfileComponent implements OnInit {
   userId: number | undefined;
   currentUserId: number | undefined;
   isFollowing: boolean = false;
-  private baseUrl = 'https://swim-api-production-1a4b.up.railway.app/';
+  private baseUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim';
 
   constructor(
     private http: HttpClient,
@@ -38,7 +38,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   getUserByUsername(username: string) {
-    return this.http.get<any>(`${this.baseUrl}/user/username/${username}`);
+    return this.http.get<any>(`${this.baseUrl}/user/username/${username}`, { withCredentials: true });
   }
 
   getCurrentUserId() {
