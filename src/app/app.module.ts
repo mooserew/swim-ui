@@ -33,6 +33,7 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { UserStatsComponent } from './user-stats/user-stats.component';
+import { RecommendedUsersComponent } from './recommended-users/recommended-users.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { UserStatsComponent } from './user-stats/user-stats.component';
     EditProfileModalComponent,
     SafeUrlPipe,
     UserStatsComponent,
+    RecommendedUsersComponent,
   ],
   imports: [
     BrowserModule,

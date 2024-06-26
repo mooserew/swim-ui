@@ -82,17 +82,18 @@ export class PostComponent implements OnInit {
   }
 
   processContent() {
-    const spotifyUrlPattern = /https:\/\/open\.spotify\.com\/(track|playlist|album|artist)\/[a-zA-Z0-9]+|https:\/\/open\.spotify\.com\/intl-[a-zA-Z0-9-]+\/(track|playlist|album|artist)\/[a-zA-Z0-9]+/;
-    const match = this.post.content.match(spotifyUrlPattern);
-    if (match) {
-      const spotifyUrl = match[0];
-      const type = this.detectSpotifyType(spotifyUrl);
-      this.setEmbedSize(type);
-      this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.generateEmbedUrl(spotifyUrl, type));
-      this.post.content = this.post.content.replace(spotifyUrl, `<a href="${spotifyUrl}" target="_blank">${spotifyUrl}</a>`);
+    const spotifyUrlPattern: RegExp = /https:\/\/open\.spotify\.com\/(intl-[a-zA-Z0-9-]+\/)?(track|playlist|album|artist)\/[a-zA-Z0-9?&=._-]+/g;
+    const matches: RegExpMatchArray | null = this.post.content.match(spotifyUrlPattern);
+    if (matches) {
+        matches.forEach((spotifyUrl: string) => {
+            const type: string = this.detectSpotifyType(spotifyUrl);
+            this.setEmbedSize(type);
+            this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.generateEmbedUrl(spotifyUrl, type));
+            this.post.content = this.post.content.replace(spotifyUrl, `<a href="${spotifyUrl}" target="_blank">${spotifyUrl}</a>`);
+        });
     }
-  }
-  
+}
+
   detectSpotifyType(url: string): string {
     if (url.includes('track')) {
       return 'track';

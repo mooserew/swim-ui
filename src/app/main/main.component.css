@@ -1,15 +1,51 @@
+.app-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh; /* Full height */
+}
+
 .main-content {
-    height: 100%;
-    color: white;
-    padding: 20px;
-  }
-  
-  .fab-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #2979ff;
-    color: white;
-    border-radius: 50% !important; 
-  }
-  
+  display: flex;
+  flex-grow: 1;
+  padding: 20px 0 20px 20px; /* Remove right padding and adjust left padding */
+  color: white;
+  overflow-y: auto; /* Make the main content scrollable */
+}
+
+.post-feed {
+  flex-grow: 1; /* Allow post feed to take available space */
+  margin-right: 20px; /* Reduce margin to the right */
+}
+
+.sidebar-container {
+  display: flex;
+  flex-direction: row; /* Align items in a row */
+  position: fixed;
+  top: 60px; /* Adjust top position as needed */
+  right: 20px; /* Align to the right */
+  height: calc(100vh - 80px); /* Adjust height to fit the screen */
+  align-items: stretch; /* Make sure the items stretch to full height */
+}
+
+.vertical-separator {
+  width: 1px;
+  background-color: darkslategray; /* Color of the separator line */
+  height: 100%; /* Full height */
+  margin-right: 20px; /* Adjust spacing around the separator as needed */
+  margin-top: 10px;
+}
+
+.recommended-users {
+  width: 300px; /* Fixed width for recommended users */
+  max-height: 100%; /* Full height within sidebar container */
+  overflow-y: auto; /* Add overflow to handle long lists */
+}
+
+.fab-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #2979ff;
+  color: white;
+  border-radius: 50% !important; 
+}

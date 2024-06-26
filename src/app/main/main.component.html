@@ -1,23 +1,35 @@
-<div>
-  <!-- Include topbar component -->
-  <app-topbar></app-topbar>
-  
-  <!-- Your existing sidebar navigation and main content -->
-  <div class="app-container">
-    <!-- Main content -->
-    <div class="main-content">
+<!-- Include topbar component -->
+<app-topbar></app-topbar>
+
+<!-- Your existing sidebar navigation and main content -->
+<div class="app-container d-flex">
+  <!-- Main content -->
+  <div class="main-content d-flex flex-grow-1">
+    <!-- Post Feed -->
+    <div class="post-feed flex-grow-1">
       <app-post-feed></app-post-feed>
-      
-      <!-- Floating action button -->
-      <button mat-fab class="fab-button btn btn-primary" (click)="openPostModal()">
-        <mat-icon>add</mat-icon>
-      </button>
     </div>
-    
-    <app-sidebar></app-sidebar>
   </div>
   
-  <!-- Include the post-create-modal component -->
-  <app-post-create-modal></app-post-create-modal>
-  
+  <!-- Vertical Separator and Recommended Users Container -->
+  <div class="sidebar-container d-flex">
+    <!-- Separator -->
+    <div class="vertical-separator"></div>
+    
+    <!-- Recommended Users -->
+    <div class="recommended-users">
+      <app-recommended-users></app-recommended-users>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
 </div>
+
+<!-- Include the post-create-modal component -->
+<app-post-create-modal></app-post-create-modal>
+
+<!-- Floating action button -->
+<button mat-fab class="fab-button btn btn-primary" (click)="openPostModal()">
+  <mat-icon>add</mat-icon>
+</button>

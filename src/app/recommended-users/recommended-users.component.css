@@ -1,0 +1,75 @@
+
+.recommended-users {
+    color: #ffffff;
+    background-color: rgb(24,24,24);        
+    padding: 10px; /* Reduced padding */
+    border-radius: 8px !important;
+    max-width: 400px; /* Reduced max-width */
+    position: relative;
+}
+
+.recommended-users h2 {
+    margin-bottom: 15px; /* Reduced margin */
+    font-size: 20px; /* Reduced font-size */
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.list-group-item {
+    display: flex;
+    align-items: center;
+    background-color: rgb(18,18,18);
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px; /* Reduced padding */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+
+.rounded-circle {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.me-3 {
+    margin-right: 0.5rem; /* Reduced margin */
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%; /* Ensure full width */
+}
+
+.user-name {
+    font-size: 16px; /* Reduced font-size */
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.user-name-link {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.user-name-link:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    font-size: 12px;
+    padding: 5px 10px;
+}
+
+ul.list-group {
+    padding: 0;
+    list-style: none;
+}
+
+ul.list-group li {
+    margin-bottom: 10px;
+}

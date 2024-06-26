@@ -16,7 +16,7 @@
               <button *ngIf="userId !== currentUserId" class="btn" [ngClass]="isFollowing ? 'btn-secondary' : 'btn-primary'" (click)="toggleFollow()">
                 {{ isFollowing ? 'Unfollow' : 'Follow' }}
               </button>
-              <button *ngIf="userId === currentUserId" class="btn btn-warning ms-3" (click)="openEditProfileModal()">
+              <button *ngIf="userId === currentUserId" class="btn btn-secondary ms-3" (click)="openEditProfileModal()">
                 Edit
               </button>
             </div>
