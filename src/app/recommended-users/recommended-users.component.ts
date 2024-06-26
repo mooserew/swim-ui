@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ProfilePictureService } from './../services/profile-picture.service';
 
 interface UserDTO {
   userId: number;
@@ -7,7 +8,7 @@ interface UserDTO {
   profilePicture: string | null;
   followersCount: number;
   followingCount: number;
-  isFollowing?: boolean; // Add this optional field
+  isFollowing?: boolean;
 }
 
 @Component({
@@ -20,7 +21,7 @@ export class RecommendedUsersComponent implements OnInit {
   private baseUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim';
   currentUserId: number | undefined;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private profilePictureService: ProfilePictureService) {}
 
   ngOnInit(): void {
     this.fetchRecommendedUsers();
@@ -33,6 +34,7 @@ export class RecommendedUsersComponent implements OnInit {
     this.http.get<UserDTO[]>('https://swim-api-production-1a4b.up.railway.app/Swim/recommendedUsers', { withCredentials: true }).subscribe(
       (data: UserDTO[]) => {
         this.recommendedUsers = data;
+        this.fetchProfilePictures();
         this.checkIfFollowing();
       },
       (error) => {
@@ -43,6 +45,22 @@ export class RecommendedUsersComponent implements OnInit {
 
   getCurrentUserId() {
     return this.http.get<number>(`${this.baseUrl}/user/userId`, { withCredentials: true });
+  }
+
+  fetchProfilePictures(): void {
+    this.recommendedUsers.forEach((user) => {
+      if (user.userId) {
+        this.profilePictureService.getProfilePictureUrl(user.userId).subscribe(
+          (url: string) => {
+            user.profilePicture = url;
+          },
+          (error) => {
+            console.error('Error fetching profile picture:', error);
+            user.profilePicture = 'default.png'; // Default picture in case of error
+          }
+        );
+      }
+    });
   }
 
   checkIfFollowing(): void {

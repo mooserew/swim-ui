@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CommentModalComponent } from '../comment-modal/comment-modal.component';
+import { ProfilePictureService } from './../services/profile-picture.service';
 
 @Component({
   selector: 'app-post',
@@ -10,20 +11,34 @@ import { CommentModalComponent } from '../comment-modal/comment-modal.component'
   styleUrls: ['./post.component.css'],
 })
 export class PostComponent implements OnInit {
-  @Input() post: any; // Input property to receive post data from parent component
-  liked: boolean = false; // Track if the post is liked or not
-  likeCount: number = 0; // Track the number of likes
-  embedUrl: SafeResourceUrl = ''; // Embed URL for the Spotify player
-  embedWidth: string = '300'; // Default width for embeds
-  embedHeight: string = '80'; // Default height for embeds
+  @Input() post: any; 
+  liked: boolean = false; 
+  likeCount: number = 0; 
+  embedUrl: SafeResourceUrl = ''; 
+  embedWidth: string = '300'; 
+  embedHeight: string = '80'; 
+  profilePictureUrl: string = ''; 
 
-  constructor(private http: HttpClient, private modalService: NgbModal, private sanitizer: DomSanitizer) {}
+  constructor(private http: HttpClient, private modalService: NgbModal, private sanitizer: DomSanitizer, private profilePictureService: ProfilePictureService) { }
 
   ngOnInit() {
-    // Initialize like state and count
     this.fetchLikeStatus();
     this.fetchLikeCount();
     this.processContent();
+    this.fetchProfilePicture(); 
+  }
+
+  fetchProfilePicture() {
+    if (this.post.userId) {
+      this.profilePictureService.getProfilePictureUrl(this.post.userId).subscribe(
+        (url: string) => {
+          this.profilePictureUrl = url;
+        },
+        (error) => {
+          console.error('Error fetching profile picture:', error);
+        }
+      );
+    }
   }
 
   formatDate(date: string) {
@@ -47,7 +62,7 @@ export class PostComponent implements OnInit {
     this.http.post(`https://swim-api-production-1a4b.up.railway.app/Swim/post/like?postId=${this.post.postId}`, null, { withCredentials: true })
       .subscribe(() => {
         this.liked = true;
-        this.fetchLikeCount(); // Update like count after liking
+        this.fetchLikeCount(); 
       }, error => {
         console.error('Error liking post:', error);
       });
@@ -57,7 +72,7 @@ export class PostComponent implements OnInit {
     this.http.delete(`https://swim-api-production-1a4b.up.railway.app/Swim/post/unlike?postId=${this.post.postId}`, { withCredentials: true })
       .subscribe(() => {
         this.liked = false;
-        this.fetchLikeCount(); // Update like count after unliking
+        this.fetchLikeCount(); 
       }, error => {
         console.error('Error unliking post:', error);
       });
@@ -85,14 +100,14 @@ export class PostComponent implements OnInit {
     const spotifyUrlPattern: RegExp = /https:\/\/open\.spotify\.com\/(intl-[a-zA-Z0-9-]+\/)?(track|playlist|album|artist)\/[a-zA-Z0-9?&=._-]+/g;
     const matches: RegExpMatchArray | null = this.post.content.match(spotifyUrlPattern);
     if (matches) {
-        matches.forEach((spotifyUrl: string) => {
-            const type: string = this.detectSpotifyType(spotifyUrl);
-            this.setEmbedSize(type);
-            this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.generateEmbedUrl(spotifyUrl, type));
-            this.post.content = this.post.content.replace(spotifyUrl, `<a href="${spotifyUrl}" target="_blank">${spotifyUrl}</a>`);
-        });
+      matches.forEach((spotifyUrl: string) => {
+        const type: string = this.detectSpotifyType(spotifyUrl);
+        this.setEmbedSize(type);
+        this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.generateEmbedUrl(spotifyUrl, type));
+        this.post.content = this.post.content.replace(spotifyUrl, `<a href="${spotifyUrl}" target="_blank">${spotifyUrl}</a>`);
+      });
     }
-}
+  }
 
   detectSpotifyType(url: string): string {
     if (url.includes('track')) {
@@ -136,7 +151,6 @@ export class PostComponent implements OnInit {
 
   extractIdFromUrl(url: string): string {
     const parts = url.split('/');
-    // The ID is always the last part of the URL
     return parts[parts.length - 1].split('?')[0];
   }
 

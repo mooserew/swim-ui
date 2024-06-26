@@ -36,7 +36,7 @@ export class PasswordResetComponent implements OnInit {
       const params = new HttpParams()
         .set('token', this.token)
         .set('newPassword', this.newPassword);
-
+  
       this.http.post('https://swim-api-production-1a4b.up.railway.app/password/reset', params, { observe: 'response' }).subscribe(
         response => {
           if (response.status === 200) {
@@ -48,8 +48,10 @@ export class PasswordResetComponent implements OnInit {
           }
         },
         error => {
-          this.message = 'Error resetting password.';
-          this.messageType = 'error';
+          if (error.status !== 200) { // Check if there's an actual error
+            this.message = 'Error resetting password.';
+            this.messageType = 'error';
+          }
         }
       );
     }

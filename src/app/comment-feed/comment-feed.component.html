@@ -1,52 +1,51 @@
 <div class="comment-feed">
-    <form (submit)="addComment()" class="add-comment-form">
-      <div class="form-group">
-        <label for="newComment">Add a comment:</label>
-        <textarea
-          class="form-control"
-          id="newComment"
-          name="newComment"
-          rows="3"
-          [(ngModel)]="newComment"
-          required
-        ></textarea>
-      </div>
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary submit-button">
-          <i class="bx bxs-send"></i> Post Comment
-        </button>
-      </div>
-    </form>
-    <ul class="list-unstyled">
-      <ng-container *ngFor="let comment of comments">
-        <li class="comment-item">
-          <div class="comment-header">
-            <div class="comment-info">
-              <img
-                src="https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_1280.jpg"
-                alt="profile pic"
-                class="profile-picture"
-              />
-              <strong class="comment-username">&#64;{{ comment.userName }}</strong>
-            </div>
-            <div *ngIf="authenticatedUserId === comment.userId" class="menu-container">
-              <button class="menu-button" (click)="toggleMenu($event, comment)">
-                &#x22EE;
+  <form (submit)="addComment()" class="add-comment-form">
+    <div class="form-group">
+      <label for="newComment">Add a comment:</label>
+      <textarea
+        class="form-control"
+        id="newComment"
+        name="newComment"
+        rows="3"
+        [(ngModel)]="newComment"
+        required
+      ></textarea>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary submit-button">
+        <i class="bx bxs-send"></i> Post Comment
+      </button>
+    </div>
+  </form>
+  <ul class="list-unstyled">
+    <ng-container *ngFor="let comment of comments">
+      <li class="comment-item">
+        <div class="comment-header">
+          <div class="comment-info">
+            <img
+              [src]="comment.profilePicture || 'default.png'"
+              alt="profile pic"
+              class="profile-picture"
+            />
+            <strong class="comment-username">&#64;{{ comment.userName }}</strong>
+          </div>
+          <div *ngIf="authenticatedUserId === comment.userId" class="menu-container">
+            <button class="menu-button" (click)="toggleMenu($event, comment)">
+              &#x22EE;
+            </button>
+            <div class="menu" *ngIf="comment.showMenu">
+              <button class="delete-button" (click)="deleteComment(comment.commentId)">
+                Delete
               </button>
-              <div class="menu" *ngIf="comment.showMenu">
-                <button class="delete-button" (click)="deleteComment(comment.commentId)">
-                  Delete
-                </button>
-              </div>
             </div>
           </div>
-          <p class="comment-content">{{ comment.content }}</p>
-          <div class="comment-actions">
-            <!-- Actions such as delete or reply can go here -->
-          </div>
-        </li>
-        <hr class="comment-separator" />
-      </ng-container>
-    </ul>
-  </div>
-  
+        </div>
+        <p class="comment-content">{{ comment.content }}</p>
+        <div class="comment-actions">
+          <!-- Actions such as delete or reply can go here -->
+        </div>
+      </li>
+      <hr class="comment-separator" />
+    </ng-container>
+  </ul>
+</div>

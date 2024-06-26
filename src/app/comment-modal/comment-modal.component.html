@@ -14,13 +14,13 @@
                 </p>
                 <div class="username-container">
                   <img
-                    src="https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_1280.jpg"
+                    [src]="profilePictureUrl || 'default.png'"
                     alt="Profile Picture"
                     class="profile-pic"
                   />
                   <p class="card-text username">&#64;{{ post.username }}</p>
                 </div>
-                <p class="card-text content" [innerHTML]="post.content"></p>
+                <p class="card-text content" [innerHTML]="sanitizedContent"></p>
                 <!-- Display fetched song details -->
                 <div *ngIf="embedUrl" class="details mt-3">
                   <iframe

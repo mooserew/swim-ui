@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'; // Import SafeResourceUrl
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ProfilePictureService } from './../services/profile-picture.service'; // Import ProfilePictureService
 
 @Component({
   selector: 'app-comment-modal',
@@ -15,14 +16,16 @@ export class CommentModalComponent implements OnInit {
   embedUrl: SafeResourceUrl = ''; // Embed URL for the Spotify player
   embedWidth: string = '300'; // Default width for embeds
   embedHeight: string = '80'; // Default height for embeds
+  profilePictureUrl: string = ''; // Variable to store profile picture URL
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer, private profilePictureService: ProfilePictureService) {}
 
   ngOnInit() {
     // Initialize like state and count
     this.fetchLikeStatus();
     this.fetchLikeCount();
     this.processContent();
+    this.fetchProfilePicture(); // Fetch profile picture
   }
 
   formatDate(date: string) {
@@ -110,14 +113,8 @@ export class CommentModalComponent implements OnInit {
   setEmbedSize(type: string): void {
     switch (type) {
       case 'track':
-        this.embedWidth = '725';
-        this.embedHeight = '200';
-        break;
       case 'playlist':
       case 'album':
-        this.embedWidth = '725';
-        this.embedHeight = '200';
-        break;
       case 'artist':
         this.embedWidth = '725';
         this.embedHeight = '200';
@@ -136,8 +133,20 @@ export class CommentModalComponent implements OnInit {
 
   extractIdFromUrl(url: string): string {
     const parts = url.split('/');
-    // The ID is always the last part of the URL
     return parts[parts.length - 1].split('?')[0];
   }
 
+  fetchProfilePicture() {
+    if (this.post.userId) {
+      this.profilePictureService.getProfilePictureUrl(this.post.userId).subscribe(
+        (url: string) => {
+          this.profilePictureUrl = url;
+        },
+        (error) => {
+          console.error('Error fetching profile picture:', error);
+          this.profilePictureUrl = 'default.png'; // Default picture in case of error
+        }
+      );
+    }
+  }
 }
