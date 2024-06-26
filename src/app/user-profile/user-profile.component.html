@@ -8,7 +8,7 @@
       <div class="user-profile-container">
         <div class="profile-header row align-items-center">
           <div class="col-md-2 text-center">
-            <img src="https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_1280.jpg" alt="{{ user?.userName }}'s profile picture" class="rounded-circle profile-picture">
+            <img [src]="user?.profilePictureUrl" alt="{{ user?.userName }}'s profile picture" class="rounded-circle profile-picture">
           </div>
           <div class="col-md-8 d-flex align-items-start flex-column">
             <div class="d-flex align-items-center">

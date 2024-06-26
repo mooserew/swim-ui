@@ -3,7 +3,7 @@
     <ul class="list-group">
         <li *ngFor="let user of recommendedUsers" class="list-group-item d-flex align-items-center">
             <a [routerLink]="['/profile', user.userName]">
-                <img [src]="user.profilePicture || 'https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_1280.jpg'" alt="{{user.userName}}'s profile picture" class="rounded-circle me-3">
+                <img [src]="user.profilePicture || 'default.png'" alt="{{user.userName}}'s profile picture" class="rounded-circle me-3">
             </a>
             <div class="user-info d-flex align-items-center">
                 <a [routerLink]="['/profile', user.userName]" class="user-name-link me-2">

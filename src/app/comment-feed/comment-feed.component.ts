@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
+import { ProfilePictureService } from './../services/profile-picture.service';
 
 @Component({
   selector: 'app-comment-feed',
@@ -14,7 +15,7 @@ export class CommentFeedComponent implements OnInit, OnDestroy {
   authenticatedUserId: number | null = null;
   private documentClickListener: (() => void) | null = null;
 
-  constructor(private http: HttpClient, private renderer: Renderer2, private cookieService: CookieService) {}
+  constructor(private http: HttpClient, private renderer: Renderer2, private cookieService: CookieService, private profilePictureService: ProfilePictureService) {}
 
   ngOnInit(): void {
     this.authenticatedUserId = this.getAuthenticatedUserId();
@@ -49,7 +50,24 @@ export class CommentFeedComponent implements OnInit, OnDestroy {
       .subscribe(data => {
         this.comments = data.reverse(); // Reverse the order of comments
         console.log('Comments:', this.comments); // Debug log
+        this.fetchProfilePictures();
       });
+  }
+
+  fetchProfilePictures() {
+    this.comments.forEach(comment => {
+      if (comment.userId) {
+        this.profilePictureService.getProfilePictureUrl(comment.userId).subscribe(
+          (url: string) => {
+            comment.profilePicture = url;
+          },
+          (error) => {
+            console.error('Error fetching profile picture:', error);
+            comment.profilePicture = 'default.png'; // Default picture in case of error
+          }
+        );
+      }
+    });
   }
 
   addComment() {
@@ -68,7 +86,22 @@ export class CommentFeedComponent implements OnInit, OnDestroy {
       .subscribe((comment: any) => {
         this.comments.unshift(comment); // Add the new comment at the beginning
         this.newComment = '';
+        this.fetchProfilePictureForComment(comment); // Fetch profile picture for the new comment
       });
+  }
+
+  fetchProfilePictureForComment(comment: any) {
+    if (comment.userId) {
+      this.profilePictureService.getProfilePictureUrl(comment.userId).subscribe(
+        (url: string) => {
+          comment.profilePicture = url;
+        },
+        (error) => {
+          console.error('Error fetching profile picture:', error);
+          comment.profilePicture = 'default.png'; // Default picture in case of error
+        }
+      );
+    }
   }
 
   toggleMenu(event: MouseEvent, comment: any) {

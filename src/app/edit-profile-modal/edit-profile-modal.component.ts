@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-profile-modal',
@@ -9,43 +9,61 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./edit-profile-modal.component.css']
 })
 export class EditProfileModalComponent implements OnInit {
-  @Input() user: any;
-  @Output() bioUpdated = new EventEmitter<string>();
-  private baseUrl = 'https://swim-api-production-1a4b.up.railway.app';
+  @Input() user: any; // Input property to receive user data from parent component
   profileForm: FormGroup;
+  selectedFile: File | null = null;
+  @Output() bioUpdated = new EventEmitter<string>();
 
   constructor(
-    private formBuilder: FormBuilder,
-    private http: HttpClient,
-    public modal: NgbActiveModal
+    public modal: NgbActiveModal,
+    private fb: FormBuilder,
+    private http: HttpClient
   ) {
-    this.profileForm = this.formBuilder.group({
-      bio: ['']  // Initialize with empty value or default bio if available
+    this.profileForm = this.fb.group({
+      bio: ['']
     });
   }
 
-  ngOnInit() {
-    if (this.user && this.user.bio) {
+  ngOnInit(): void {
+    if (this.user) {
       this.profileForm.patchValue({
         bio: this.user.bio
       });
     }
   }
 
-  saveChanges() {
-    const newBio = this.profileForm.get('bio')?.value;
-    const params = new HttpParams().set('newBio', newBio);
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+  }
 
-    this.http.put(`${this.baseUrl}/user/edit-profile`, {}, { params, responseType: 'text', withCredentials: true })
-      .subscribe(
-        (response: any) => {
-          console.log('Profile updated successfully:', response);
-          this.bioUpdated.emit(newBio);  // Emit the updated bio
-          this.modal.close('Profile updated');
-        },
-        (error: any) => {
-          console.error('Error updating profile:', error);
-        }
-      );
+  saveChanges(): void {
+    const bioFormData: FormData = new FormData();
+    bioFormData.append('newBio', this.profileForm.get('bio')?.value);
+    
+    // Update bio
+    this.http.put('https://swim-api-production-1a4b.up.railway.app/Swim/user/edit-profile', bioFormData, { withCredentials: true })
+      .subscribe(response => {
+        console.log('Bio updated successfully', response);
+        this.bioUpdated.emit(this.profileForm.get('bio')?.value);
+        // Optionally handle success, e.g., show a message
+      }, error => {
+        console.error('Error updating bio', error);
+      });
+
+    // Update profile picture if a file is selected
+    if (this.selectedFile) {
+      const fileFormData: FormData = new FormData();
+      fileFormData.append('file', this.selectedFile, this.selectedFile.name);
+
+      this.http.post('https://swim-api-production-1a4b.up.railway.app/Swim/user/upload', fileFormData, { withCredentials: true })
+        .subscribe(response => {
+          console.log('Profile picture updated successfully', response);
+          this.modal.close('profileUpdated');
+        }, error => {
+          console.error('Error updating profile picture', error);
+        });
+    } else {
+      this.modal.close();
+    }
   }
 }

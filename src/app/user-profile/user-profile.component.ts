@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileModalComponent } from '../edit-profile-modal/edit-profile-modal.component';
+import { map } from 'rxjs/operators';
+import { ProfilePictureService } from './../services/profile-picture.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -19,7 +21,8 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private profilePictureService: ProfilePictureService
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +31,10 @@ export class UserProfileComponent implements OnInit {
       this.getUserByUsername(username).subscribe((data) => {
         this.user = data;
         this.userId = data.userId;
-        this.checkIfFollowing();
+        if (this.userId !== undefined) {
+          this.refreshProfilePictureUrl(this.userId);
+          this.checkIfFollowing();
+        }
       });
     }
 
@@ -45,8 +51,15 @@ export class UserProfileComponent implements OnInit {
     return this.http.get<number>(`${this.baseUrl}/user/userId`, { withCredentials: true });
   }
 
+  refreshProfilePictureUrl(userId: number) {
+    this.profilePictureService.getProfilePictureUrl(userId).subscribe((url) => {
+      console.log('Profile picture URL:', url);
+      this.user.profilePictureUrl = url;
+    });
+  }
+
   checkIfFollowing(): void {
-    if (this.userId) {
+    if (this.userId !== undefined) {
       this.http.get<boolean>(`${this.baseUrl}/isFollowing`, {
         params: { followerId: this.userId.toString() },
         withCredentials: true
@@ -65,7 +78,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   followUser(): void {
-    if (this.userId) {
+    if (this.userId !== undefined) {
       this.http.post(`${this.baseUrl}/follow`, null, {
         params: { followerId: this.userId.toString() },
         withCredentials: true,
@@ -78,7 +91,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   unfollowUser(): void {
-    if (this.userId) {
+    if (this.userId !== undefined) {
       this.http.post(`${this.baseUrl}/unfollow`, null, {
         params: { followerId: this.userId.toString() },
         withCredentials: true,
@@ -95,6 +108,11 @@ export class UserProfileComponent implements OnInit {
     modalRef.componentInstance.user = this.user;
     modalRef.componentInstance.bioUpdated.subscribe((newBio: string) => {
       this.user.bio = newBio;
+    });
+    modalRef.result.then((result) => {
+      if (result === 'profileUpdated') {
+        this.refreshProfilePictureUrl(this.userId!);
+      }
     });
   }
 }

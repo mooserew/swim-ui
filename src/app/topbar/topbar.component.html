@@ -12,8 +12,8 @@
       <div class="dropdown-menu position-absolute" [class.show]="searchResults.length > 0" *ngIf="searchResults.length > 0">
         <ul class="list-group" aria-labelledby="dropdownMenuButton">
           <li class="list-group-item dropdown-item" *ngFor="let result of searchResults">
-            <a class="dropdown-link d-flex align-items-center" href="profile/{{ result.userName }}">
-              <img src="https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_1280.jpg" alt="{{ result.userName }}'s profile picture" width="30" height="30" class="rounded-circle me-2">
+            <a class="dropdown-link d-flex align-items-center" [routerLink]="['/profile', result.userName]">
+              <img [src]="result.profilePicture || 'default.png'" alt="{{ result.userName }}'s profile picture" width="30" height="30" class="rounded-circle me-2">
               &#64;{{ result.userName }}
             </a>
           </li>
@@ -21,7 +21,7 @@
       </div>
     </form>
     <div class="user-info d-flex align-items-center">
-      <img src="https://cdn.pixabay.com/photo/2020/05/17/20/21/cat-5183427_1280.jpg" alt="Profile Picture" class="profile-pic" />
+      <img [src]="profilePictureUrl" alt="Profile Picture" class="profile-pic"/>
       <span class="username">&#64;{{ username }}</span>
     </div>
   </div>
