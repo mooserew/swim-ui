@@ -1,40 +1,32 @@
 <div class="d-flex justify-content-center align-items-center vh-100">
-  <div class="card p-4" style="width: 300px;">
-    <div class="card-body">
-      <h5 class="card-title text-center mb-4">Login &#64; Swim</h5>
-      <div *ngIf="loginError" class="alert alert-danger" role="alert">
-        {{ loginError }}
-      </div>
-      <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
-        <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <input type="text" class="form-control" id="username" name="username" placeholder="Username" ngModel required>
-          <!-- Add validation message for username -->
-          <div *ngIf="loginForm.controls.username.touched && loginForm.controls.username.errors?.required" class="text-danger">
-            Username is required.
+    <div class="card p-4" style="width: 300px;">
+        <div class="card-body">
+            <h5 class="card-title text-center mb-4">Login &#64; Swim</h5>
+            <div *ngIf="loginError" class="alert alert-danger" role="alert">
+                {{ loginError }}
+              </div>
+              <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+                <div class="mb-3">
+                  <label for="username" class="form-label">Username</label>
+                  <input type="text" class="form-control" id="username" name="username" placeholder="Username" ngModel required>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" [type]="isPasswordVisible ? 'text' : 'password'" ngModel required>
+                    <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+                      <i class="bi" [ngClass]="isPasswordVisible ? 'bi-eye' : 'bi-eye-slash'"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                  <a href="password-request" class="small">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+              </form>
+              <div class="text-center mt-3">
+                <span>Don't have an account? <a href="register">Register</a></span>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <div class="input-group">
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password" [type]="isPasswordVisible ? 'text' : 'password'" ngModel required>
-            <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
-              <i class="bi" [ngClass]="isPasswordVisible ? 'bi-eye' : 'bi-eye-slash'"></i>
-            </button>
-          </div>
-          <!-- Add validation message for password -->
-          <div *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.required" class="text-danger">
-            Password is required.
-          </div>
-        </div>
-        <div class="d-flex justify-content-between mb-3">
-          <a href="password-request" class="small">Forgot Password?</a>
-        </div>
-        <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">Login</button>
-      </form>
-      <div class="text-center mt-3">
-        <span>Don't have an account? <a href="register">Register</a></span>
-      </div>
-    </div>
-  </div>
-</div>
