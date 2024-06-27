@@ -13,6 +13,7 @@ export class UserStatsComponent implements OnInit {
   topTracks: any[] = [];
   topArtists: any[] = [];
   accessToken: string | null = null;
+  tokensHandled: boolean = false;
 
   constructor(
     private spotifyAuthService: SpotifyAuthService,
@@ -22,6 +23,8 @@ export class UserStatsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
+      if (this.tokensHandled) return;
+
       const code = params['code'];
       if (code) {
         this.spotifyAuthService.handleCallback(code).subscribe(response => {
@@ -33,7 +36,8 @@ export class UserStatsComponent implements OnInit {
           if (refreshToken) {
             localStorage.setItem('spotify_refresh_token', refreshToken);
           }
-          this.router.navigate(['/stats']); // Redirect to /stats after storing tokens
+          this.tokensHandled = true;
+          this.router.navigate([], { queryParams: {} }); // Clear the query params after handling
         }, error => {
           console.error('Error handling callback', error);
           this.login();
