@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SpotifyAuthService } from '../services/spotify-auth.service';
+import { catchError, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-user-stats',
@@ -8,8 +10,8 @@ import { SpotifyAuthService } from '../services/spotify-auth.service';
   styleUrls: ['./user-stats.component.css']
 })
 export class UserStatsComponent implements OnInit {
-  topTracks: any;
-  topArtists: any;
+  topTracks: any[] = [];
+  topArtists: any[] = [];
   accessToken: string | null = null;
 
   constructor(
@@ -32,19 +34,25 @@ export class UserStatsComponent implements OnInit {
             localStorage.setItem('spotify_refresh_token', refreshToken);
           }
           this.router.navigate(['/stats']); // Redirect to /stats after storing tokens
+        }, error => {
+          console.error('Error handling callback', error);
+          this.login();
         });
       } else {
         this.accessToken = localStorage.getItem('spotify_access_token');
         const refreshToken = localStorage.getItem('spotify_refresh_token');
         if (this.accessToken) {
-          this.getTopArtists();
+          this.getTopArtistsAndTracks(this.accessToken);
         } else if (refreshToken) {
           this.spotifyAuthService.refreshAccessToken(refreshToken).subscribe(response => {
             this.accessToken = response.accessToken;
             if (this.accessToken) {
               localStorage.setItem('spotify_access_token', this.accessToken);
-              this.getTopArtists();
+              this.getTopArtistsAndTracks(this.accessToken);
             }
+          }, error => {
+            console.error('Error refreshing access token', error);
+            this.login();
           });
         } else {
           this.login();
@@ -53,12 +61,22 @@ export class UserStatsComponent implements OnInit {
     });
   }
 
-  getTopArtists(): void {
-    if (this.accessToken) {
-      this.spotifyAuthService.getUserTopArtists(this.accessToken).subscribe(data => {
+  getTopArtistsAndTracks(accessToken: string): void {
+    this.spotifyAuthService.getUserTopArtists(accessToken).pipe(
+      switchMap(data => {
         this.topArtists = data.items;
-      });
-    }
+        return this.spotifyAuthService.getUserTopTracks(accessToken);
+      }),
+      catchError(error => {
+        console.error('Error fetching top artists or tracks', error);
+        this.login();
+        return of(null); // Return a null observable to handle the error gracefully
+      })
+    ).subscribe(data => {
+      if (data) {
+        this.topTracks = data.items;
+      }
+    });
   }
 
   login(): void {
