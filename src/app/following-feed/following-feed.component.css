@@ -1,0 +1,13 @@
+.main-content {
+    margin-left: 20px;
+    margin-top: 80px;
+}
+
+.fab-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #2979ff;
+    color: white;
+    border-radius: 50% !important;
+}

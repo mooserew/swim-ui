@@ -38,7 +38,7 @@
         <div class="d-flex flex-wrap justify-content-center mt-5">
           <div class="artist-card text-center" *ngFor="let artist of topArtists.slice(3); let i = index">
             <div class="rank">{{ i + 4 }}</div>
-            <img [src]="artist.images[0]?.url" alt="{{ artist.name }}" class="artist-picture rounded-circle"/>
+            <img [src]="artist.images[0]?.url" alt="{{ artist.name }}" class="artist-picture"/>
             <div class="artist-info mt-2">
               <strong class="artist-name">{{ artist.name }}</strong>
             </div>

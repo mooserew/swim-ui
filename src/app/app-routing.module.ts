@@ -8,6 +8,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { RequestPageComponent } from './request-page/request-page.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { UserStatsComponent } from './user-stats/user-stats.component';
+import { FollowingFeedComponent } from './following-feed/following-feed.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
   {
     path: 'stats', 
     component: UserStatsComponent,
+  },
+  {
+    path: 'following', 
+    component: FollowingFeedComponent,
   },
   { path: 'stats', component: UserStatsComponent },
   { path: 'callback', component: UserStatsComponent },

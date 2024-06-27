@@ -1,6 +1,6 @@
 /* Set background color for the entire app */
 body {
-    background-color: rgb(18,18,18);
+    background-color: rgb(16,16,16);
 }
 
 html, body { height: 100%; }

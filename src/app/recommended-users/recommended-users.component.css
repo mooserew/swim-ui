@@ -1,11 +1,14 @@
-
 .recommended-users {
     color: #ffffff;
-    background-color: rgb(24,24,24);        
+    background-color: rgb(18,18,18); /* Updated background color */
+    border-left: darkslategray;
     padding: 10px; /* Reduced padding */
-    border-radius: 8px !important;
     max-width: 400px; /* Reduced max-width */
+    width: 100%;
+    height: calc(100vh); /* Full height minus topbar height */
+    border-left: 1px solid darkslategray; /* Added left border */
     position: relative;
+    overflow-y: auto; /* Ensure the list is scrollable */
 }
 
 .recommended-users h2 {
@@ -24,7 +27,6 @@
     padding: 10px; /* Reduced padding */
     transition: transform 0.3s, box-shadow 0.3s;
 }
-
 
 .rounded-circle {
     border-radius: 50%;

@@ -34,6 +34,7 @@ import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-mod
 import { SafeUrlPipe } from './safe-url.pipe';
 import { UserStatsComponent } from './user-stats/user-stats.component';
 import { RecommendedUsersComponent } from './recommended-users/recommended-users.component';
+import { FollowingFeedComponent } from './following-feed/following-feed.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { RecommendedUsersComponent } from './recommended-users/recommended-users
     SafeUrlPipe,
     UserStatsComponent,
     RecommendedUsersComponent,
+    FollowingFeedComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,9 +7,11 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root'
 })
 export class PostService {
-  private feedUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/post/following';
+  private feedUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/post/all';
   private profilePostsUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/post/get';
   private createPostUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/post/create';
+  private followedPostsUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/post/following';
+  
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
@@ -30,6 +32,11 @@ export class PostService {
     const headers = this.getAuthHeaders();
     const url = `${this.profilePostsUrl}/${username}`;
     return this.http.get(url, { headers, withCredentials: true });
+  }
+
+  getPostsByFollowing(): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.get(this.followedPostsUrl, { headers, withCredentials: true });
   }
 
   createPost(content: string): Observable<any> {

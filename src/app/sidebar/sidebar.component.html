@@ -12,28 +12,28 @@
         <hr class="content-divider" />
         <!-- Grey line separator -->
         <li class="list">
-          <a
-            routerLink="/profile/{{ username }}"
-            routerLinkActive="active-link"
-            class="nav-link"
-          >
+          <a routerLink="/following" routerLinkActive="active-link" class="nav-link">
+            <i class='bx bx-group icon'></i>
+            <span class="link">Following</span>
+          </a>
+        </li>
+        <hr class="content-divider" />
+        <li class="list">
+          <a routerLink="/profile/{{ username }}" routerLinkActive="active-link" class="nav-link">
             <i class="bx bx-user icon"></i>
             <span class="link">Profile</span>
           </a>
         </li>
+
         <hr class="content-divider" />
-        <!-- Grey line separator -->
         <li class="list">
-          <a
-            routerLink="/stats"
-            routerLinkActive="active-link"
-            class="nav-link"
-          >
+          <a routerLink="/stats" routerLinkActive="active-link" class="nav-link">
             <i class="bx bx-bar-chart-alt-2 icon"></i>
             <span class="link" (click)="login()">Stats</span>
           </a>
         </li>
         <hr class="content-divider" />
+
         <!-- Grey line separator -->
         <!-- Add more list items as needed -->
       </ul>
@@ -46,7 +46,7 @@
             <app-logout></app-logout>
           </li>
           <li class="list">
-            <a class="nav-link" (click)="confirmDelete()">
+            <a class="nav-link delete-account" (click)="confirmDelete()">
               <i class='bx bxs-bomb icon'></i>
               <span class="link">Delete Account</span>
             </a>

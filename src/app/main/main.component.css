@@ -14,31 +14,17 @@
 
 .post-feed {
   flex-grow: 1; /* Allow post feed to take available space */
-  margin-right: 20px; /* Reduce margin to the right */
+  margin-left: 35px; /* Reduce margin to the right */
 }
 
 .sidebar-container {
   display: flex;
   flex-direction: row; /* Align items in a row */
   position: fixed;
-  top: 60px; /* Adjust top position as needed */
-  right: 20px; /* Align to the right */
-  height: calc(100vh - 80px); /* Adjust height to fit the screen */
+  top: 30px; /* Adjust top position as needed */
+  right: 5px; /* Align to the right */
+  height: calc(100vh - 60px); /* Adjust height to fit the screen minus topbar */
   align-items: stretch; /* Make sure the items stretch to full height */
-}
-
-.vertical-separator {
-  width: 1px;
-  background-color: darkslategray; /* Color of the separator line */
-  height: 100%; /* Full height */
-  margin-right: 20px; /* Adjust spacing around the separator as needed */
-  margin-top: 10px;
-}
-
-.recommended-users {
-  width: 300px; /* Fixed width for recommended users */
-  max-height: 100%; /* Full height within sidebar container */
-  overflow-y: auto; /* Add overflow to handle long lists */
 }
 
 .fab-button {
