@@ -17,11 +17,11 @@
                 <p class="card-text username">&#64;{{ post.username }}</p>
               </a>
             </div>
-            <p class="card-text content" [innerHTML]="post.content"></p>
+            <p class="card-text content" [innerHTML]="sanitizedContent"></p>
             
             <!-- Display fetched song details -->
             <div class="spotify-embed-container" *ngIf="embedUrl">
-              <iframe class="spotify-embed" [src]="embedUrl" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+              <iframe class="spotify-embed" [src]="embedUrl" [width]="embedWidth" [height]="embedHeight" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
             </div>
             
             <hr class="content-divider" />
@@ -31,10 +31,12 @@
               <small class="text-muted">Posted on {{ formatDate(post.createdAt) }}</small>
             </p>
             
-            <div class="menu-container">
-              <button class="menu-button">&#x22EE;</button>
+            <div *ngIf="authenticatedUserId === post.userId" class="menu-container">
+              <button class="menu-button" (click)="toggleMenu($event, post)">
+                &#x22EE;
+              </button>
               <div class="menu" *ngIf="post.showMenu">
-                <button class="delete-button">Delete</button>
+                <button class="delete-button" (click)="deletePost(post.postId)">Delete</button>
               </div>
             </div>
             

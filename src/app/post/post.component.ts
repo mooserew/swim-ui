@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -10,22 +10,55 @@ import { ProfilePictureService } from './../services/profile-picture.service';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css'],
 })
-export class PostComponent implements OnInit {
-  @Input() post: any; 
-  liked: boolean = false; 
-  likeCount: number = 0; 
-  embedUrl: SafeResourceUrl = ''; 
-  embedWidth: string = '300'; 
-  embedHeight: string = '80'; 
-  profilePictureUrl: string = ''; 
+export class PostComponent implements OnInit, OnDestroy {
+  @Input() post: any;
+  liked: boolean = false;
+  likeCount: number = 0;
+  sanitizedContent: string = '';
+  embedUrl: SafeResourceUrl = '';
+  embedWidth: string = '300';
+  embedHeight: string = '80';
+  profilePictureUrl: string = '';
+  authenticatedUserId: number | null = null;
+  private documentClickListener: (() => void) | null = null;
 
-  constructor(private http: HttpClient, private modalService: NgbModal, private sanitizer: DomSanitizer, private profilePictureService: ProfilePictureService) { }
+  constructor(
+    private http: HttpClient,
+    private modalService: NgbModal,
+    private sanitizer: DomSanitizer,
+    private profilePictureService: ProfilePictureService,
+    private renderer: Renderer2
+  ) {}
 
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
+    this.authenticatedUserId = await this.getAuthenticatedUserId();
     this.fetchLikeStatus();
     this.fetchLikeCount();
     this.processContent();
-    this.fetchProfilePicture(); 
+    this.fetchProfilePicture();
+
+    // Add document click listener
+    this.documentClickListener = this.renderer.listen('document', 'click', (event) => {
+      this.handleDocumentClick(event);
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Remove document click listener when component is destroyed
+    if (this.documentClickListener) {
+      this.documentClickListener();
+      this.documentClickListener = null;
+    }
+  }
+
+  async getAuthenticatedUserId(): Promise<number | null> {
+    try {
+      const response = await this.http.get<{ id?: number }>('https://swim-api-production-1a4b.up.railway.app/Swim/userid', { withCredentials: true }).toPromise();
+      return response?.id ?? null;
+    } catch (error) {
+      console.error('Error fetching authenticated user ID:', error);
+      return null;
+    }
   }
 
   fetchProfilePicture() {
@@ -62,7 +95,7 @@ export class PostComponent implements OnInit {
     this.http.post(`https://swim-api-production-1a4b.up.railway.app/Swim/post/like?postId=${this.post.postId}`, null, { withCredentials: true })
       .subscribe(() => {
         this.liked = true;
-        this.fetchLikeCount(); 
+        this.fetchLikeCount();
       }, error => {
         console.error('Error liking post:', error);
       });
@@ -72,7 +105,7 @@ export class PostComponent implements OnInit {
     this.http.delete(`https://swim-api-production-1a4b.up.railway.app/Swim/post/unlike?postId=${this.post.postId}`, { withCredentials: true })
       .subscribe(() => {
         this.liked = false;
-        this.fetchLikeCount(); 
+        this.fetchLikeCount();
       }, error => {
         console.error('Error unliking post:', error);
       });
@@ -98,15 +131,17 @@ export class PostComponent implements OnInit {
 
   processContent() {
     const spotifyUrlPattern: RegExp = /https:\/\/open\.spotify\.com\/(intl-[a-zA-Z0-9-]+\/)?(track|playlist|album|artist)\/[a-zA-Z0-9?&=._-]+/g;
-    const matches: RegExpMatchArray | null = this.post.content.match(spotifyUrlPattern);
+    let content = this.post.content;
+    const matches: RegExpMatchArray | null = content.match(spotifyUrlPattern);
     if (matches) {
       matches.forEach((spotifyUrl: string) => {
         const type: string = this.detectSpotifyType(spotifyUrl);
         this.setEmbedSize(type);
         this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.generateEmbedUrl(spotifyUrl, type));
-        this.post.content = this.post.content.replace(spotifyUrl, `<a href="${spotifyUrl}" target="_blank">${spotifyUrl}</a>`);
+        content = content.replace(spotifyUrl, '');
       });
     }
+    this.sanitizedContent = content;
   }
 
   detectSpotifyType(url: string): string {
@@ -125,14 +160,8 @@ export class PostComponent implements OnInit {
   setEmbedSize(type: string): void {
     switch (type) {
       case 'track':
-        this.embedWidth = '600';
-        this.embedHeight = '380';
-        break;
       case 'playlist':
       case 'album':
-        this.embedWidth = '600';
-        this.embedHeight = '380';
-        break;
       case 'artist':
         this.embedWidth = '600';
         this.embedHeight = '380';
@@ -157,5 +186,33 @@ export class PostComponent implements OnInit {
   openCommentModal() {
     const modalRef = this.modalService.open(CommentModalComponent, { size: 'lg' });
     modalRef.componentInstance.post = this.post;
+    modalRef.componentInstance.sanitizedContent = this.sanitizedContent;
+    modalRef.componentInstance.embedUrl = this.embedUrl;
+    modalRef.componentInstance.embedWidth = this.embedWidth;
+    modalRef.componentInstance.embedHeight = this.embedHeight;
+  }
+
+  toggleMenu(event: MouseEvent, post: any) {
+    event.stopPropagation();
+    post.showMenu = !post.showMenu;
+  }
+
+  handleDocumentClick(event: MouseEvent) {
+    if (this.post) {
+      this.post.showMenu = false;
+    }
+  }
+
+  deletePost(postId: number) {
+    const options = {
+      withCredentials: true
+    };
+
+    this.http.delete(`https://swim-api-production-1a4b.up.railway.app/Swim/post/delete/${postId}`, options)
+      .subscribe(() => {
+        // Handle successful deletion (e.g., removing the post from the view)
+      }, error => {
+        console.error('Error deleting post:', error);
+      });
   }
 }
