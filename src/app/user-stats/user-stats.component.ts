@@ -37,7 +37,7 @@ export class UserStatsComponent implements OnInit {
             localStorage.setItem('spotify_refresh_token', refreshToken);
           }
           this.tokensHandled = true;
-          this.router.navigate([], { queryParams: {} }); // Clear the query params after handling
+          this.router.navigate(['/stats']); // Redirect to /stats after storing tokens
         }, error => {
           console.error('Error handling callback', error);
           this.login();
