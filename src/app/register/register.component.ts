@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,33 +8,36 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
-  isPasswordVisible = false;
+export class RegisterComponent {
+
+  isPasswordVisible: boolean = false;
+  registrationError: string | null = null;
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  ngOnInit(): void {
+  togglePasswordVisibility(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
-  togglePasswordVisibility() {
-    this.isPasswordVisible =!this.isPasswordVisible;
-  }
-
-  onSubmit(loginForm: NgForm) {
+  onSubmit(registerForm: NgForm): void {
     const userRegistrationRequest = {
-      userName: loginForm.value.username,
-      email: loginForm.value.email,
-      password: loginForm.value.password
+      userName: registerForm.value.username,
+      email: registerForm.value.email,
+      password: registerForm.value.password
     };
 
     this.http.post('https://swim-api-production-1a4b.up.railway.app/Swim/register', userRegistrationRequest, { responseType: 'text' })
-     .subscribe(response => {
+      .subscribe(response => {
         console.log(response);
         this.router.navigate(['/login']);
         // Handle successful registration response
       }, error => {
         console.error(error);
-        // Handle registration error
+        if (error.error && typeof error.error === 'string') {
+          this.registrationError = error.error; // Assuming error message is a string
+        } else {
+          this.registrationError = 'An unexpected error occurred. Please try again later.';
+        }
       });
   }
 }

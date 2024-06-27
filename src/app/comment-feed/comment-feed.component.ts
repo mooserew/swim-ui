@@ -17,8 +17,8 @@ export class CommentFeedComponent implements OnInit, OnDestroy {
 
   constructor(private http: HttpClient, private renderer: Renderer2, private cookieService: CookieService, private profilePictureService: ProfilePictureService) {}
 
-  ngOnInit(): void {
-    this.authenticatedUserId = this.getAuthenticatedUserId();
+  async ngOnInit(): Promise<void> {
+    this.authenticatedUserId = await this.getAuthenticatedUserId();
     console.log('Authenticated User ID:', this.authenticatedUserId); // Debug log
     this.loadComments();
 
@@ -36,9 +36,14 @@ export class CommentFeedComponent implements OnInit, OnDestroy {
     }
   }
 
-  getAuthenticatedUserId(): number | null {
-    const userId = this.cookieService.get('jwtToken');
-    return userId ? Number(userId) : null;
+  async getAuthenticatedUserId(): Promise<number | null> {
+    try {
+      const response = await this.http.get<{ id?: number }>('https://swim-api-production-1a4b.up.railway.app/Swim/userid', { withCredentials: true }).toPromise();
+      return response?.id ?? null;
+    } catch (error) {
+      console.error('Error fetching authenticated user ID:', error);
+      return null;
+    }
   }
 
   loadComments() {

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ProfilePictureService } from './../services/profile-picture.service'; // Import ProfilePictureService
+import { ProfilePictureService } from './../services/profile-picture.service';
 
 @Component({
   selector: 'app-comment-modal',
@@ -9,23 +9,22 @@ import { ProfilePictureService } from './../services/profile-picture.service'; /
   styleUrls: ['./comment-modal.component.css']
 })
 export class CommentModalComponent implements OnInit {
-  @Input() post: any; // Input property to receive post data from parent component
-  liked: boolean = false; // Track if the post is liked or not
-  likeCount: number = 0; // Track the number of likes
-  sanitizedContent: string = ''; // Variable to store sanitized content
-  embedUrl: SafeResourceUrl = ''; // Embed URL for the Spotify player
-  embedWidth: string = '300'; // Default width for embeds
-  embedHeight: string = '80'; // Default height for embeds
-  profilePictureUrl: string = ''; // Variable to store profile picture URL
+  @Input() post: any;
+  liked: boolean = false;
+  likeCount: number = 0;
+  sanitizedContent: string = '';
+  embedUrl: SafeResourceUrl = '';
+  embedWidth: string = '300';
+  embedHeight: string = '80';
+  profilePictureUrl: string = '';
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer, private profilePictureService: ProfilePictureService) {}
 
   ngOnInit() {
-    // Initialize like state and count
     this.fetchLikeStatus();
     this.fetchLikeCount();
     this.processContent();
-    this.fetchProfilePicture(); // Fetch profile picture
+    this.fetchProfilePicture();
   }
 
   formatDate(date: string) {
@@ -49,7 +48,7 @@ export class CommentModalComponent implements OnInit {
     this.http.post(`https://swim-api-production-1a4b.up.railway.app/Swim/post/like?postId=${this.post.postId}`, null, { withCredentials: true })
       .subscribe(() => {
         this.liked = true;
-        this.fetchLikeCount(); // Update like count after liking
+        this.fetchLikeCount();
       }, error => {
         console.error('Error liking post:', error);
       });
@@ -59,7 +58,7 @@ export class CommentModalComponent implements OnInit {
     this.http.delete(`https://swim-api-production-1a4b.up.railway.app/Swim/post/unlike?postId=${this.post.postId}`, { withCredentials: true })
       .subscribe(() => {
         this.liked = false;
-        this.fetchLikeCount(); // Update like count after unliking
+        this.fetchLikeCount();
       }, error => {
         console.error('Error unliking post:', error);
       });
@@ -84,18 +83,21 @@ export class CommentModalComponent implements OnInit {
   }
 
   processContent() {
-    const spotifyUrlPattern = /https:\/\/open\.spotify\.com\/(track|playlist|album|artist)\/[a-zA-Z0-9]+|https:\/\/open\.spotify\.com\/intl-[a-zA-Z0-9-]+\/(track|playlist|album|artist)\/[a-zA-Z0-9]+/;
-    const match = this.post.content.match(spotifyUrlPattern);
-    if (match) {
-      const spotifyUrl = match[0];
-      const type = this.detectSpotifyType(spotifyUrl);
-      this.setEmbedSize(type);
-      this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.generateEmbedUrl(spotifyUrl, type));
-      this.sanitizedContent = this.post.content.replace(spotifyUrl, `<a href="${spotifyUrl}" target="_blank">${spotifyUrl}</a>`);
-    } else {
-      this.sanitizedContent = this.post.content;
+    const spotifyUrlPattern: RegExp = /https:\/\/open\.spotify\.com\/(intl-[a-zA-Z0-9-]+\/)?(track|playlist|album|artist)\/[a-zA-Z0-9?&=._-]+/g;
+    let content = this.post.content;
+    const matches: RegExpMatchArray | null = content.match(spotifyUrlPattern);
+    if (matches) {
+      matches.forEach((spotifyUrl: string) => {
+        const type: string = this.detectSpotifyType(spotifyUrl);
+        this.setEmbedSize(type);
+        this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.generateEmbedUrl(spotifyUrl, type));
+        // Remove the Spotify URL from the content completely
+        content = content.replace(spotifyUrl, '');
+      });
     }
+    this.sanitizedContent = content;
   }
+  
 
   detectSpotifyType(url: string): string {
     if (url.includes('track')) {
@@ -144,7 +146,7 @@ export class CommentModalComponent implements OnInit {
         },
         (error) => {
           console.error('Error fetching profile picture:', error);
-          this.profilePictureUrl = 'default.png'; // Default picture in case of error
+          this.profilePictureUrl = 'default.png';
         }
       );
     }

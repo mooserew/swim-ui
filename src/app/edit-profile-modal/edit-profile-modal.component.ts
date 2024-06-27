@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-profile-modal',
@@ -37,33 +37,40 @@ export class EditProfileModalComponent implements OnInit {
   }
 
   saveChanges(): void {
-    const bioFormData: FormData = new FormData();
-    bioFormData.append('newBio', this.profileForm.get('bio')?.value);
-    
-    // Update bio
-    this.http.put('https://swim-api-production-1a4b.up.railway.app/Swim/user/edit-profile', bioFormData, { withCredentials: true })
-      .subscribe(response => {
-        console.log('Bio updated successfully', response);
-        this.bioUpdated.emit(this.profileForm.get('bio')?.value);
-        // Optionally handle success, e.g., show a message
-      }, error => {
-        console.error('Error updating bio', error);
-      });
+    const bio = this.profileForm.get('bio')?.value;
+
+    if (bio && bio.trim() !== '') {
+      const bioFormData: FormData = new FormData();
+      bioFormData.append('newBio', bio);
+
+      // Update bio
+      this.http.put('https://swim-api-production-1a4b.up.railway.app/Swim/user/edit-profile', bioFormData, { withCredentials: true, responseType: 'text' })
+        .subscribe(response => {
+          console.log('Bio updated successfully', response);
+          this.bioUpdated.emit(bio);
+          // Optionally handle success, e.g., show a message
+        }, (error: HttpErrorResponse) => {
+          console.error('Error updating bio', error);
+        });
+    }
 
     // Update profile picture if a file is selected
     if (this.selectedFile) {
       const fileFormData: FormData = new FormData();
       fileFormData.append('file', this.selectedFile, this.selectedFile.name);
 
-      this.http.post('https://swim-api-production-1a4b.up.railway.app/Swim/user/upload', fileFormData, { withCredentials: true })
+      this.http.post('https://swim-api-production-1a4b.up.railway.app/Swim/user/upload', fileFormData, { withCredentials: true, responseType: 'text' })
         .subscribe(response => {
           console.log('Profile picture updated successfully', response);
           this.modal.close('profileUpdated');
-        }, error => {
+        }, (error: HttpErrorResponse) => {
           console.error('Error updating profile picture', error);
         });
+    } else if (!bio || bio.trim() === '') {
+      // If no bio and no profile picture, just close the modal
+      this.modal.close('noChanges');
     } else {
-      this.modal.close();
+      this.modal.close('bioUpdated');
     }
   }
 }
