@@ -1,30 +1,43 @@
 .recommended-users {
     color: #ffffff;
-    background-color: rgb(18,18,18); /* Updated background color */
+    background-color: rgb(18, 18, 18);
+    /* Updated background color */
     border-left: darkslategray;
-    padding: 10px; /* Reduced padding */
-    max-width: 400px; /* Reduced max-width */
+    padding: 10px;
+    /* Reduced padding */
+    max-width: 400px;
+    /* Reduced max-width */
     width: 100%;
-    height: calc(100vh); /* Full height minus topbar height */
-    border-left: 1px solid darkslategray; /* Added left border */
+    height: calc(100vh);
+    /* Full height minus topbar height */
+    border-left: 1px solid darkslategray;
+    /* Added left border */
     position: relative;
-    overflow-y: auto; /* Ensure the list is scrollable */
+    overflow-y: auto;
+    /* Ensure the list is scrollable */
 }
 
 .recommended-users h2 {
-    margin-bottom: 15px; /* Reduced margin */
-    font-size: 20px; /* Reduced font-size */
-    color: #ffffff;
+    margin-top: 20px;
+    /* Added top margin to move text further down */
+    margin-bottom: 15px;
+    /* Reduced margin */
+    font-size: 20px;
+    /* Reduced font-size */
+    color: #ccc;
+    padding-left: 10px;
+    /* Added padding to move text to the right */
 }
 
 .list-group-item {
     display: flex;
     align-items: center;
-    background-color: rgb(18,18,18);
+    background-color: rgb(24, 24, 24);
     border: none;
     border-radius: 10px;
     margin-bottom: 10px;
-    padding: 10px; /* Reduced padding */
+    padding: 5px;
+    /* Reduced padding */
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -35,20 +48,17 @@
     object-fit: cover;
 }
 
-.me-3 {
-    margin-right: 0.5rem; /* Reduced margin */
-}
-
 .user-info {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%; /* Ensure full width */
-}
+    width: 100%;
+    margin-left: 10px; /* Add a small margin to move the username closer to the profile picture */
+  }
 
 .user-name {
-    font-size: 16px; /* Reduced font-size */
-    font-weight: bold;
+    font-size: 15px;
+    /* Reduced font-size */
     color: #ffffff;
 }
 

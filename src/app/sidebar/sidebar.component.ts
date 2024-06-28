@@ -51,8 +51,17 @@ export class SidebarComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           console.log('Account deleted successfully');
-          // Redirect to the login page after account deletion
-          this.router.navigate(['/login']);
+          // Call the logout method to expire the cookie
+          this.authService.logout().subscribe({
+            next: () => {
+              // Redirect to the login page after account deletion and logout
+              this.router.navigate(['/login']);
+            },
+            error: (logoutError) => {
+              console.error('Error during logout after account deletion', logoutError);
+              this.router.navigate(['/login']);
+            }
+          });
         },
         error: (error: any) => {
           console.error('Error deleting account', error);

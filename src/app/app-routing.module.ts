@@ -14,10 +14,13 @@ const routes: Routes = [
   {
     path: '',
     component: MainComponent,
+    canActivate: [AuthGuard],
+
   },
   {
     path: 'home',
     component: MainComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'login',
@@ -28,30 +31,34 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'profile/:username', 
+    path: 'profile/:username',
     component: UserProfileComponent,
+    canActivate: [AuthGuard],
   },
   {
-    path: 'password-request', 
+    path: 'password-request',
     component: RequestPageComponent
   },
-  { path: 'reset-password', 
-    component: PasswordResetComponent 
+  {
+    path: 'reset-password',
+    component: PasswordResetComponent
   },
   {
-    path: 'stats', 
+    path: 'stats',
     component: UserStatsComponent,
+    canActivate: [AuthGuard],
   },
   {
-    path: 'following', 
+    path: 'following',
     component: FollowingFeedComponent,
+    canActivate: [AuthGuard],
   },
-  { path: 'stats', component: UserStatsComponent },
-  { path: 'callback', component: UserStatsComponent },
+  { path: 'callback', component: UserStatsComponent, canActivate: [AuthGuard],},
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

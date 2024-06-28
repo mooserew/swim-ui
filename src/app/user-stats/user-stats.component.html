@@ -2,6 +2,12 @@
 <app-topbar></app-topbar>
 
 <div class="main-content mt-5">
+  <div class="logout-container d-flex justify-content-end mb-3">
+    <button class="btn btn-spotify d-flex align-items-center" (click)="logoutFromSpotify()">
+      <i class='bx bxl-spotify bx-sm'></i>
+      <span class="ms-2">Logout from Spotify</span>
+    </button>
+  </div>
   <div *ngIf="accessToken">
     <div class="row">
       <div class="col-md-12">

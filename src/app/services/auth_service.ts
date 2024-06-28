@@ -24,6 +24,7 @@ interface UsernameResponse {
 export class AuthService {
   private loginUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/login'; // Backend login URL
   private logoutUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/logout'; // Backend logout URL
+  private checkLoginUrl = 'https://swim-api-production-1a4b.up.railway.app/Swim/checkLogin'; // Backend check login status URL
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
@@ -70,8 +71,17 @@ export class AuthService {
       );
   }
 
-  isLoggedIn(): boolean {
-    return this.cookieService.check('jwt');
+  async isLoggedIn(): Promise<boolean> {
+    try {
+      const response = await this.http
+        .get<{ loggedIn: boolean }>(this.checkLoginUrl, { withCredentials: true })
+        .toPromise();
+
+      return response ? response.loggedIn : false;
+    } catch (error) {
+      console.error('Error checking login status:', error);
+      return false; // Return false in case of error
+    }
   }
 
   redirectToLogin(): void {
@@ -102,6 +112,8 @@ export class AuthService {
   }
 
   exchangeAuthorizationCode(code: string): Observable<any> {
-    return this.http.get(`https://swim-api-production-1a4b.up.railway.app/callback?code=${code}`);
+    return this.http.get(`https://swim-api-production-1a4b.up.railway.app/callback?code=${code}`, {
+      withCredentials: true,
+    });
   }
 }

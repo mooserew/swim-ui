@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileModalComponent } from '../edit-profile-modal/edit-profile-modal.component';
-import { map } from 'rxjs/operators';
 import { ProfilePictureService } from './../services/profile-picture.service';
 
 @Component({
@@ -26,20 +25,22 @@ export class UserProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const username = this.route.snapshot.paramMap.get('username');
-    if (username) {
-      this.getUserByUsername(username).subscribe((data) => {
-        this.user = data;
-        this.userId = data.userId;
-        if (this.userId !== undefined) {
-          this.refreshProfilePictureUrl(this.userId);
-          this.checkIfFollowing();
-        }
-      });
-    }
+    this.route.params.subscribe(params => {
+      const username = params['username'];
+      if (username) {
+        this.getUserByUsername(username).subscribe((data) => {
+          this.user = data;
+          this.userId = data.userId;
+          if (this.userId !== undefined) {
+            this.refreshProfilePictureUrl(this.userId);
+            this.checkIfFollowing();
+          }
+        });
+      }
 
-    this.getCurrentUserId().subscribe((data) => {
-      this.currentUserId = data;
+      this.getCurrentUserId().subscribe((data) => {
+        this.currentUserId = data;
+      });
     });
   }
 

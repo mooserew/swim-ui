@@ -25,6 +25,7 @@
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "html2canvas": "^1.4.1",
     "jquery": "^3.7.1",
     "ngx-cookie-service": "^18.0.0",
     "popper.js": "^1.16.1",

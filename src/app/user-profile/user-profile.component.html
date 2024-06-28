@@ -8,12 +8,12 @@
       <div class="user-profile-container">
         <div class="profile-header row align-items-center">
           <div class="col-md-2 text-center">
-            <img [src]="user?.profilePictureUrl" alt="{{ user?.userName }}'s profile picture" class="rounded-circle profile-picture">
+            <img [src]="user?.profilePictureUrl" alt="{{ user?.userName }}'s profile picture" class="profile-picture">
           </div>
           <div class="col-md-8 d-flex align-items-start flex-column">
             <div class="d-flex align-items-center">
               <h2 class="user-name me-3">{{ user?.userName }}</h2>
-              <button *ngIf="userId !== currentUserId" class="btn" [ngClass]="isFollowing ? 'btn-secondary' : 'btn-primary'" (click)="toggleFollow()">
+              <button *ngIf="userId !== currentUserId" class="btn follow-button" [ngClass]="isFollowing ? 'btn-secondary' : 'btn-primary'" (click)="toggleFollow()">
                 {{ isFollowing ? 'Unfollow' : 'Follow' }}
               </button>
               <button *ngIf="userId === currentUserId" class="btn btn-secondary ms-3" (click)="openEditProfileModal()">

@@ -1,4 +1,14 @@
-/* Main content adjustment */
+.btn-spotify {
+  background-color: #1DB954;
+  color: white;
+}
+
+.logout-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
 .main-content {
   margin-left: 175px; /* Adjust according to the sidebar width */
   margin-top: 60px; /* Adjust according to the topbar height */
@@ -6,6 +16,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative; /* Add this for the absolute positioning of the logout button */
 }
 
 .user-stats-container {
