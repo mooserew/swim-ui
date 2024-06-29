@@ -21,6 +21,7 @@ export class PostComponent implements OnInit, OnDestroy {
   profilePictureUrl: string = '';
   authenticatedUserId: number | null = null;
   private documentClickListener: (() => void) | null = null;
+  defaultProfilePictureUrl: string = 'assets/placeholder-profile-pic.png'; // Placeholder image path
 
   constructor(
     private http: HttpClient,
@@ -69,9 +70,18 @@ export class PostComponent implements OnInit, OnDestroy {
         },
         (error) => {
           console.error('Error fetching profile picture:', error);
+          this.profilePictureUrl = this.defaultProfilePictureUrl; // Use placeholder on error
         }
       );
     }
+  }
+
+  onImageLoad() {
+    // Image loaded successfully, no action needed
+  }
+
+  onImageError() {
+    this.profilePictureUrl = this.defaultProfilePictureUrl; // Fallback to placeholder image
   }
 
   formatDate(date: string) {

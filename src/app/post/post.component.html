@@ -7,7 +7,7 @@
             <div class="username-container">
               <a [routerLink]="['/profile', post.username]">
                 <img
-                  [src]="profilePictureUrl"
+                  [src]="profilePictureUrl || 'default.png'"
                   alt="Profile Picture"
                   class="profile-pic"
                   style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;"
