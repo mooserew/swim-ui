@@ -9,58 +9,68 @@
     </button>
   </div>
   <div *ngIf="accessToken">
-    <div class="row">
-      <div class="col-md-12">
-        <h2 class="text-white text-center">Top Artists (Last 6 months)</h2>
-        <div class="d-flex flex-wrap justify-content-center podium-container">
-          <div class="artist-podium" *ngIf="topArtists.length > 2">
-            <div class="podium-second">
-              <div class="artist-card text-center">
-                <img [src]="topArtists[1].images[0]?.url" alt="{{ topArtists[1].name }}" class="artist-picture rounded-circle second-place"/>
-                <div class="artist-info mt-2">
-                  <strong class="artist-name">{{ topArtists[1].name }}</strong>
+    <div id="top-artists-container" class="section-container">
+      <div class="section-header text-center">
+        <button id="export-artists-btn" class="btn btn-export" (click)="exportArtistsAsImage()">Export Artists as Image</button>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="text-white text-center">Top Artists (Last 6 months)</h2>
+          <div class="d-flex flex-wrap justify-content-center podium-container" id="top-artists">
+            <div class="artist-podium" *ngIf="topArtists.length > 2">
+              <div class="podium-second">
+                <div class="artist-card text-center">
+                  <div class="artist-picture second-place" [style.background-image]="'url(' + topArtists[1].images[0]?.url + ')'"></div>
+                  <div class="artist-info mt-2">
+                    <strong class="artist-name">{{ topArtists[1].name }}</strong>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="podium-first">
-              <div class="artist-card text-center">
-                <div class="crown">👑</div>
-                <img [src]="topArtists[0].images[0]?.url" alt="{{ topArtists[0].name }}" class="artist-picture rounded-circle first-place"/>
-                <div class="artist-info mt-2">
-                  <strong class="artist-name">{{ topArtists[0].name }}</strong>
+              <div class="podium-first">
+                <div class="artist-card text-center">
+                  <div class="crown">👑</div>
+                  <div class="artist-picture first-place" [style.background-image]="'url(' + topArtists[0].images[0]?.url + ')'"></div>
+                  <div class="artist-info mt-2">
+                    <strong class="artist-name">{{ topArtists[0].name }}</strong>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="podium-third">
-              <div class="artist-card text-center">
-                <img [src]="topArtists[2].images[0]?.url" alt="{{ topArtists[2].name }}" class="artist-picture rounded-circle third-place"/>
-                <div class="artist-info mt-2">
-                  <strong class="artist-name">{{ topArtists[2].name }}</strong>
+              <div class="podium-third">
+                <div class="artist-card text-center">
+                  <div class="artist-picture third-place" [style.background-image]="'url(' + topArtists[2].images[0]?.url + ')'"></div>
+                  <div class="artist-info mt-2">
+                    <strong class="artist-name">{{ topArtists[2].name }}</strong>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="d-flex flex-wrap justify-content-center mt-5">
-          <div class="artist-card text-center" *ngFor="let artist of topArtists.slice(3); let i = index">
-            <div class="rank">{{ i + 4 }}</div>
-            <img [src]="artist.images[0]?.url" alt="{{ artist.name }}" class="artist-picture"/>
-            <div class="artist-info mt-2">
-              <strong class="artist-name">{{ artist.name }}</strong>
+          <div class="d-flex flex-wrap justify-content-center mt-5">
+            <div class="artist-card text-center" *ngFor="let artist of topArtists.slice(3); let i = index">
+              <div class="rank">{{ i + 4 }}</div>
+              <div class="artist-picture" [style.background-image]="'url(' + artist.images[0]?.url + ')'"></div>
+              <div class="artist-info mt-2">
+                <strong class="artist-name">{{ artist.name }}</strong>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="row mt-5">
-      <div class="col-md-12">
-        <h2 class="text-white text-center">Top Tracks (Last 6 months)</h2>
-        <div class="d-flex flex-wrap justify-content-center">
-          <div class="track-card" *ngFor="let track of topTracks; let i = index">
-            <img [src]="track.album.images[0]?.url" alt="{{ track.name }}" class="track-picture"/>
-            <div class="track-info ml-3">
-              <strong class="track-name">{{ track.name }}</strong>
-              <div class="track-artist">{{ track.artists[0]?.name }}</div>
+    <div id="top-tracks-container" class="section-container mt-5">
+      <div class="section-header text-center">
+        <button id="export-tracks-btn" class="btn btn-export" (click)="exportTracksAsImage()">Export Tracks as Image</button>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="text-white text-center">Top Tracks (Last 6 months)</h2>
+          <div class="d-flex flex-wrap justify-content-center" id="top-tracks">
+            <div class="track-card" *ngFor="let track of topTracks; let i = index">
+              <div class="track-picture" [style.background-image]="'url(' + track.album.images[0]?.url + ')'"></div>
+              <div class="track-info ml-3">
+                <strong class="track-name">{{ track.name }}</strong>
+                <div class="track-artist">{{ track.artists[0]?.name }}</div>
+              </div>
             </div>
           </div>
         </div>

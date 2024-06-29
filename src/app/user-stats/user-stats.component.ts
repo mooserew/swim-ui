@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SpotifyAuthService } from '../services/spotify-auth.service';
 import { catchError, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-user-stats',
@@ -87,5 +88,41 @@ export class UserStatsComponent implements OnInit {
     localStorage.removeItem('spotify_access_token');
     localStorage.removeItem('spotify_refresh_token');
     this.router.navigate(['/home']);
+  }
+
+  exportArtistsAsImage(): void {
+    const exportButton = document.getElementById('export-artists-btn') as HTMLElement;
+    const topArtistsContainer = document.getElementById('top-artists-container') as HTMLElement;
+
+    if (topArtistsContainer) {
+      exportButton.style.display = 'none'; // Hide the button
+      topArtistsContainer.style.backgroundColor = 'black'; // Set background to black
+      html2canvas(topArtistsContainer, { useCORS: true, backgroundColor: '#000', scrollX: 0, scrollY: 0 }).then(canvas => {
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = 'spotify-top-artists.png';
+        link.click();
+        exportButton.style.display = ''; // Show the button again
+        topArtistsContainer.style.backgroundColor = ''; // Reset background
+      }).catch(error => console.error('Error capturing image:', error));
+    }
+  }
+
+  exportTracksAsImage(): void {
+    const exportButton = document.getElementById('export-tracks-btn') as HTMLElement;
+    const topTracksContainer = document.getElementById('top-tracks-container') as HTMLElement;
+
+    if (topTracksContainer) {
+      exportButton.style.display = 'none'; // Hide the button
+      topTracksContainer.style.backgroundColor = 'black'; // Set background to black
+      html2canvas(topTracksContainer, { useCORS: true, backgroundColor: '#000', scrollX: 0, scrollY: 0 }).then(canvas => {
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = 'spotify-top-tracks.png';
+        link.click();
+        exportButton.style.display = ''; // Show the button again
+        topTracksContainer.style.backgroundColor = ''; // Reset background
+      }).catch(error => console.error('Error capturing image:', error));
+    }
   }
 }

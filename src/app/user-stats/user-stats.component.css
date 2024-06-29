@@ -19,6 +19,15 @@
   position: relative; /* Add this for the absolute positioning of the logout button */
 }
 
+.section-container {
+  width: 100%;
+}
+
+.section-header {
+  margin-bottom: 10px; /* Add margin for spacing */
+  display: flex;
+  justify-content: center;
+}
 .user-stats-container {
   width: 100%;
   max-width: 1200px; /* Adjust as needed */
@@ -44,9 +53,11 @@
 .artist-picture {
   width: 100px;
   height: 100px;
-  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-color: black;
   margin-bottom: 10px;
-  border-radius: 10px;
+  border-radius: 50%;
 }
 
 .artist-name {
@@ -83,8 +94,11 @@
 .track-picture {
   width: 64px;
   height: 64px;
-  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-color: black;
   border-radius: 8px;
+  border: 2px solid #fff;
 }
 
 .track-info {
@@ -182,4 +196,19 @@
   .crown {
     top: -20px; /* Adjust for smaller screens */
   }
+}
+
+.btn-export {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px; /* Add margin for spacing */
+}
+
+.btn-export:hover {
+  background-color: #0056b3; /* Darker blue for hover */
 }
