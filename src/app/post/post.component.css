@@ -71,6 +71,7 @@ hr {
   color: #ffffff !important;
   font-size: 1rem !important;
   margin-left: 10px !important; /* Adjust left margin */
+  font-weight: bold;
 }
 
 a.user-name-link, 

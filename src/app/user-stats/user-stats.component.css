@@ -10,7 +10,7 @@
 }
 
 .main-content {
-  margin-left: 175px; /* Adjust according to the sidebar width */
+  margin-left: 250px; /* Adjust according to the sidebar width */
   margin-top: 60px; /* Adjust according to the topbar height */
   padding: 20px;
   display: flex;

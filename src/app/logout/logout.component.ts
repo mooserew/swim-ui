@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
     template: `
         <a (click)="logout()" class="nav-link">
             <i class="bx bx-log-out icon"></i>
-            <span class="link">Sair</span>
+            <span class="link">Logout</span>
         </a>
     `,
     styles: [`

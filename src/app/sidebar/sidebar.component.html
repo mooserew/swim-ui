@@ -1,4 +1,4 @@
-<nav class="side-nav">
+<nav class="side-nav recommended-users">
   <div class="sidebar">
     <div class="sidebar-content">
       <!-- Navigation Links -->
@@ -9,33 +9,36 @@
             <span class="link">Home</span>
           </a>
         </li>
-        <hr class="content-divider" />
-        <!-- Grey line separator -->
         <li class="list">
-          <a routerLink="/following" routerLinkActive="active-link" class="nav-link">
-            <i class='bx bx-group icon'></i>
+          <a
+            routerLink="/following"
+            routerLinkActive="active-link"
+            class="nav-link"
+          >
+            <i class="bx bx-group icon"></i>
             <span class="link">Following</span>
           </a>
         </li>
-        <hr class="content-divider" />
         <li class="list">
-          <a routerLink="/profile/{{ username }}" routerLinkActive="active-link" class="nav-link">
+          <a
+            routerLink="/profile/{{ username }}"
+            routerLinkActive="active-link"
+            class="nav-link"
+          >
             <i class="bx bx-user icon"></i>
             <span class="link">Profile</span>
           </a>
         </li>
-
-        <hr class="content-divider" />
         <li class="list">
-          <a routerLink="/stats" routerLinkActive="active-link" class="nav-link">
+          <a
+            routerLink="/stats"
+            routerLinkActive="active-link"
+            class="nav-link"
+          >
             <i class="bx bx-bar-chart-alt-2 icon"></i>
-            <span class="link" (click)="login()">Stats</span>
+            <span class="link">Stats</span>
           </a>
         </li>
-        <hr class="content-divider" />
-
-        <!-- Grey line separator -->
-        <!-- Add more list items as needed -->
       </ul>
 
       <!-- User Info and Logout Link -->
@@ -47,7 +50,7 @@
           </li>
           <li class="list">
             <a class="nav-link delete-account" (click)="confirmDelete()">
-              <i class='bx bxs-bomb icon'></i>
+              <i class="bx bxs-message-alt-x icon"></i>
               <span class="link">Delete Account</span>
             </a>
           </li>
@@ -58,7 +61,12 @@
 </nav>
 
 <!-- Delete Account Confirmation Modal -->
-<div *ngIf="showDeleteConfirm" class="modal show d-block" tabindex="-1" role="dialog">
+<div
+  *ngIf="showDeleteConfirm"
+  class="modal show d-block"
+  tabindex="-1"
+  role="dialog"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -68,11 +76,21 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Are you sure you want to delete your account? This cannot be reverted.</p>
+        <p>
+          Are you sure you want to delete your account? This cannot be reverted.
+        </p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="deleteAccount()">Yes, delete my account</button>
-        <button type="button" class="btn btn-secondary" (click)="cancelDelete()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="deleteAccount()">
+          Yes, delete my account
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancelDelete()"
+        >
+          Cancel
+        </button>
       </div>
     </div>
   </div>

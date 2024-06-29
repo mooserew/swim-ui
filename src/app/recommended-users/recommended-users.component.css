@@ -1,65 +1,60 @@
 .recommended-users {
     color: #ffffff;
     background-color: rgb(18, 18, 18);
-    /* Updated background color */
-    border-left: darkslategray;
-    padding: 10px;
-    /* Reduced padding */
-    max-width: 400px;
-    /* Reduced max-width */
-    width: 100%;
-    height: calc(100vh);
-    /* Full height minus topbar height */
-    border-left: 1px solid darkslategray;
-    /* Added left border */
+    padding: 20px;
+    max-width: 100%;
+    width: 400px;
+    height: calc(100vh - 60px); /* Adjust for top bar height */
     position: relative;
     overflow-y: auto;
-    /* Ensure the list is scrollable */
+    margin: 0 auto; /* Center align on larger screens */
+    border-left: 2px solid darkslategrey; /* Add left border */
 }
 
 .recommended-users h2 {
     margin-top: 20px;
-    /* Added top margin to move text further down */
     margin-bottom: 15px;
-    /* Reduced margin */
     font-size: 20px;
-    /* Reduced font-size */
     color: #ccc;
     padding-left: 10px;
-    /* Added padding to move text to the right */
 }
 
 .list-group-item {
     display: flex;
     align-items: center;
     background-color: rgb(24, 24, 24);
-    border: none;
     border-radius: 10px;
-    margin-bottom: 10px;
-    padding: 5px;
-    /* Reduced padding */
+    margin-bottom: 20px; /* Increased margin between items */
+    padding: 20px; /* Increased padding for better spacing */
     transition: transform 0.3s, box-shadow 0.3s;
+    border: none; /* Remove border around each item */
 }
 
 .rounded-circle {
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 50px; /* Increased size of the profile picture */
+    height: 50px;
     object-fit: cover;
 }
 
 .user-info {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     width: 100%;
-    margin-left: 10px; /* Add a small margin to move the username closer to the profile picture */
-  }
+    margin-left: 10px; /* Margin between profile picture and username */
+}
+
+.user-details {
+    flex-grow: 1; /* Allow the username container to grow */
+    margin-left: 8px; /* Space between profile picture and username */
+    margin-right: 20px; /* Space between username and follow button */
+}
 
 .user-name {
-    font-size: 15px;
-    /* Reduced font-size */
+    font-size: 16px; /* Increased font size */
     color: #ffffff;
+    margin: 0; /* Reset margin for the <h5> tag */
+    font-weight: bold;
 }
 
 .user-name-link {
@@ -72,8 +67,9 @@
 }
 
 .btn {
-    font-size: 12px;
-    padding: 5px 10px;
+    font-size: 14px; /* Increased button font size */
+    padding: 8px 16px; /* Increased button padding */
+    margin-left: auto; /* Align button to the right */
 }
 
 ul.list-group {
@@ -82,5 +78,19 @@ ul.list-group {
 }
 
 ul.list-group li {
-    margin-bottom: 10px;
+    margin-bottom: 20px; /* Increased margin between list items */
+}
+
+@media (max-width: 576px) {
+    .recommended-users {
+        padding: 15px;
+    }
+    
+    .list-group-item {
+        padding: 16px;
+    }
+    
+    .user-name {
+        font-size: 14px;
+    }
 }

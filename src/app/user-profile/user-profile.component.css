@@ -8,8 +8,8 @@
 }
 
 .col-md-2 {
-  flex: 0 0 200px; /* Fixed width for the sidebar */
-  max-width: 200px;
+  flex: 0 0 250px; /* Fixed width for the sidebar */
+  max-width: 250px;
 }
 
 .col-md-10 {
