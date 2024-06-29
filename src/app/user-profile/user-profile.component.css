@@ -92,8 +92,19 @@
     padding: 0;
   }
 
-  .profile-stats {
+  .profile-header .col-md-2, .profile-header .col-md-8, .profile-header .col-md-10 {
+    display: flex;
     justify-content: center;
+    align-items: center;
+  }
+
+  .profile-header .col-md-2 .profile-stats {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .profile-header .col-md-2 .stat-item {
+    margin: 0 10px;
   }
 
   .follow-button {
