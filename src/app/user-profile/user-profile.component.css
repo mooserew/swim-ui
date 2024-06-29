@@ -27,6 +27,7 @@
   margin-top: 60px;
   color: #ffffff;
   flex: 1; /* Ensure it takes up the remaining space */
+  position: relative; /* Ensure position context for absolute elements */
 }
 
 .profile-picture {
@@ -42,13 +43,33 @@
   font-size: 1.5em;
 }
 
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .profile-stats {
   margin-top: 10px;
   color: white;
+  display: flex;
+  justify-content: flex-end; /* Push items to the right */
 }
 
 .stat-item {
   text-align: left;
+  display: flex;
+  align-items: center;
+  margin-left: 10px; /* Add slight left margin between items */
+}
+
+.stat-item span:first-child {
+  margin-right: 5px;
+  color: white; /* Change the count color to white */
+}
+
+.stat-item span:last-child {
+  color: #b0b0b0; /* Change the "Following" and "Followers" text to darker gray */
 }
 
 .follow-button {
@@ -85,26 +106,9 @@
     text-align: center;
   }
 
-  .profile-header .col-md-2, 
-  .profile-header .col-md-8, 
-  .profile-header .col-md-10 {
-    width: 100%;
-    padding: 0;
-  }
-
-  .profile-header .col-md-2, .profile-header .col-md-8, .profile-header .col-md-10 {
-    display: flex;
+  .profile-header .profile-stats {
     justify-content: center;
-    align-items: center;
-  }
-
-  .profile-header .col-md-2 .profile-stats {
-    flex-direction: row;
-    justify-content: center;
-  }
-
-  .profile-header .col-md-2 .stat-item {
-    margin: 0 10px;
+    margin-top: 10px;
   }
 
   .follow-button {
