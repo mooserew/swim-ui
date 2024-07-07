@@ -1,5 +1,10 @@
 <div class="main-content">
-    <div class="post-feed" style="margin-top: 50px;">
+  <div class="post-feed" style="margin-top: 50px;">
+    <ng-container *ngIf="posts.length > 0; else noPosts">
       <app-post *ngFor="let post of posts" [post]="post"></app-post>
-    </div>
-  </div>  
+    </ng-container>
+    <ng-template #noPosts>
+      <p class="no-posts-message">No posts yet.</p>
+    </ng-template>
+  </div>
+</div>

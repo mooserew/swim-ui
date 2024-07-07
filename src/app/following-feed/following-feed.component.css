@@ -1,13 +1,20 @@
-.main-content {
+.no-following-message {
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .main-content {
     margin-left: 20px;
     margin-top: 80px;
-}
-
-.fab-button {
+  }
+  
+  .fab-button {
     position: fixed;
     bottom: 20px;
     right: 20px;
     background-color: #2979ff;
     color: white;
     border-radius: 50% !important;
-}
+  }
+  
